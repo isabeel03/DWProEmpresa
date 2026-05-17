@@ -1,23 +1,23 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginLandingComponent } from './components/login-landing/login-landing.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { authGuard } from './guards/auth.guard';
+import { HomeComponent } from './components/home/home';
+import { LoginLandingComponent } from './components/login-landing/login-landing';
+import { LoginFormComponent } from './components/login-form/login-form';
+import { DashboardComponent } from './components/dashboard/dashboard';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-  // [C1] Pagina Home (index) - Ruta por defecto
+  // [C1] Pagina Home (index) con branding ProEmpresa
   { path: '', component: HomeComponent },
   
-  // [C2] Interfaz de Banca por Internet (pantalla previa)
+  // [C2] Interfaz previa: Pantalla de "Banca por Internet"
   { path: 'banca-por-internet', component: LoginLandingComponent },
   
-  // [C3] Formulario de Login
+  // [C3] Formulario de Login conectado a la BD
   { path: 'login', component: LoginFormComponent },
   
-  // [C5] Dashboard protegido (solo entra si está autenticado)
+  // [C5] Dashboard con los datos del usuario (Protegido por el guardia)
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   
-  // Si ponen cualquier otra ruta, los manda al Home
+  // Redirección por defecto si la ruta no existe
   { path: '**', redirectTo: '' }
 ];

@@ -1,0 +1,186 @@
+.dashboard-container {
+  min-height: 100vh;
+  background-color: var(--proempresa-gray-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header del Dashboard */
+.dashboard-header {
+  background-color: #ffffff;
+  padding: 15px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--proempresa-blue-dark);
+}
+
+.logo-text .accent {
+  color: var(--proempresa-orange);
+}
+
+.badge-banca {
+  margin-left: 10px;
+  background-color: #e6f0fa;
+  color: var(--proempresa-blue-light);
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.welcome-text {
+  color: #444;
+  font-size: 15px;
+}
+
+.btn-logout {
+  background-color: transparent;
+  border: 1px solid #cc0000;
+  color: #cc0000;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #cc0000;
+  color: white;
+}
+
+/* Contenido Principal */
+.dashboard-content {
+  padding: 40px 5%;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.summary-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  margin-bottom: 30px;
+}
+
+.summary-card h2 {
+  margin: 0;
+  color: var(--proempresa-blue-dark);
+  font-size: 22px;
+}
+
+.subtitle {
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+/* Grilla de Cuentas */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #fff;
+}
+
+.product-card.account {
+  border-left: 5px solid var(--proempresa-blue-light);
+}
+
+.product-card.credit {
+  border-left: 5px solid var(--proempresa-orange);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-right: 15px;
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.account-number {
+  margin: 4px 0 0 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.card-balance {
+  margin-left: auto;
+  text-align: right;
+}
+
+.card-balance .currency {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-right: 2px;
+}
+
+.card-balance .amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+}
+
+.card-balance.debt .amount {
+  color: #cc0000;
+}
+
+.debt-label {
+  display: block;
+  font-size: 11px;
+  color: #888;
+}
+
+/* Acciones Rápidas */
+.quick-actions h3 {
+  color: #444;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.actions-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background-color: white;
+  border: 1px solid #ccc;
+  color: #555;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

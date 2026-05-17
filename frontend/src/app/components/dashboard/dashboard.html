@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="brand">
+      <span class="logo-text">Pro<span class="accent">Empresa</span></span>
+      <span class="badge-banca">Banca por Internet</span>
+    </div>
+    <div class="user-profile">
+      <span class="welcome-text">Bienvenido(a), <strong>{{ userEmail }}</strong></span>
+      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión 🚪</button>
+    </div>
+  </header>
+
+  <main class="dashboard-content">
+    <section class="summary-card">
+      <h2>Resumen de tus Cuentas Empresariales</h2>
+      <p class="subtitle">Consulta los saldos de tus productos financieros en tiempo real.</p>
+
+      <div class="products-grid">
+        <div class="product-card account">
+          <div class="card-icon">💰</div>
+          <div class="card-info">
+            <h3>Cuenta Ahorro Negocio</h3>
+            <p class="account-number">N° Cuenta: 450-3321948-0-12</p>
+          </div>
+          <div class="card-balance">
+            <span class="currency">S/</span>
+            <span class="amount">15,450.00</span>
+          </div>
+        </div>
+
+        <div class="product-card credit">
+          <div class="card-icon">📈</div>
+          <div class="card-info">
+            <h3>Crédito Capital de Trabajo</h3>
+            <p class="account-number">N° Contrato: CR-88341-PR</p>
+          </div>
+          <div class="card-balance debt">
+            <span class="currency">S/</span>
+            <span class="amount">8,200.00</span>
+            <small class="debt-label">Saldo pendiente</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-actions">
+      <h3>Operaciones Disponibles</h3>
+      <div class="actions-container">
+        <button class="action-btn" disabled>💸 Transferencias</button>
+        <button class="action-btn" disabled>📄 Ver Estado de Cuenta</button>
+        <button class="action-btn" disabled>🗓️ Cronograma de Pagos</button>
+      </div>
+    </section>
+  </main>
+</div>

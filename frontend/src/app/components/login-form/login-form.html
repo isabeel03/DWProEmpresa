@@ -1,1 +1,44 @@
-<p>login-form works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Ingreso Seguro</h2>
+    <p class="subtitle">Banca por Internet de Pro<span class="accent">Empresa</span></p>
+
+    <div class="alert alert-error" *ngIf="errorMessage">
+      🛑 {{ errorMessage }}
+    </div>
+
+    <div class="alert alert-success" *ngIf="successMessage">
+      ✅ {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="onLoginSubmit()">
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          [(ngModel)]="emailInput" 
+          placeholder="ejemplo@correo.com" 
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña de Banca</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          [(ngModel)]="passwordInput" 
+          placeholder="••••••••" 
+          required>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Verificando...' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+
+    <a routerLink="/banca-por-internet" class="btn-back">Regresar a la zona segura</a>
+  </div>
+</div>

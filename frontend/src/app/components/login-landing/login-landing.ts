@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-landing',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './login-landing.html',
-  styleUrl: './login-landing.css',
+  styleUrl: './login-landing.css'
 })
-export class LoginLanding {}
+export class LoginLandingComponent {}
