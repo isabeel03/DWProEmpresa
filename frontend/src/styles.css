@@ -1,0 +1,14 @@
+:root {
+  --proempresa-blue-dark: #003366;   /* Azul principal */
+  --proempresa-blue-light: #005691;  /* Azul de botones */
+  --proempresa-orange: #FF9900;      /* Naranja de acento */
+  --proempresa-gray-bg: #F4F6F9;     /* Fondo gris claro */
+  --proempresa-text: #333333;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--proempresa-gray-bg);
+  color: var(--proempresa-text);
+}
