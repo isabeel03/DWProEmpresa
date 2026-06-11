@@ -1,1 +1,25 @@
-<router-outlet></router-outlet>
+<div class="site-wrapper">
+  <header class="navbar">
+    <div class="logo-area" routerLink="/">
+      <span class="logo-text">Pro<span class="accent">Empresa</span></span>
+      <small class="entity-type">Financiera</small>
+    </div>
+    
+    <nav class="nav-links">
+      <a routerLink="/productos" routerLinkActive="active-link">Productos ▾</a>
+      <a routerLink="/servicios" routerLinkActive="active-link">Servicios ▾</a>
+      <a routerLink="/contacto" routerLinkActive="active-link">Ayuda y contacto ▾</a>
+      <a routerLink="/canales" routerLinkActive="active-link">Canales ▾</a>
+    </nav>
+
+    <button class="btn-banca" routerLink="/banca-por-internet">Banca por Internet 🔒</button>
+  </header>
+
+  <main class="content-body">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="main-footer">
+    <p>&copy; 2026 Financiera ProEmpresa S.A. Todos los derechos reservados. Regulado y Supervisado por la SBS.</p>
+  </footer>
+</div>

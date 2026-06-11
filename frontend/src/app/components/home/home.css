@@ -1,36 +1,56 @@
+/* Contenedor general y Fuentes */
 .home-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #ffffff 60%, #f4f6f9 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+  color: var(--proempresa-text);
 }
 
-/* Navbar */
+/* Navbar Fija Superior */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 8%;
+  padding: 15px 8%;
   background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
 .logo-text {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--proempresa-blue-dark);
-  letter-spacing: -1px;
 }
 
 .logo-text .accent {
   color: var(--proempresa-orange);
 }
 
+.entity-type {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #666;
+  margin-top: 2px;
+}
+
 .nav-links a {
-  margin: 0 20px;
+  margin: 0 15px;
   text-decoration: none;
   color: #555;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 15px;
   transition: color 0.3s;
 }
 
@@ -42,11 +62,12 @@
   background-color: var(--proempresa-orange);
   color: white;
   border: none;
-  padding: 10px 22px;
+  padding: 10px 20px;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  font-size: 14px;
+  transition: all 0.3s;
 }
 
 .btn-banca:hover {
@@ -54,13 +75,16 @@
   transform: translateY(-2px);
 }
 
-/* Hero Section */
+/* Ajuste de Margen para el contenido por la Navbar Fija */
 .hero-section {
+  margin-top: 75px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 80px 8%;
-  flex: 1;
+  padding: 100px 8%;
+  background: linear-gradient(135deg, #ffffff 60%, #eef3f7 100%);
+  min-height: calc(100vh - 75px);
+  box-sizing: border-box;
 }
 
 .hero-content {
@@ -68,7 +92,7 @@
 }
 
 .hero-content h1 {
-  font-size: 48px;
+  font-size: 44px;
   color: var(--proempresa-blue-dark);
   line-height: 1.2;
   margin-bottom: 20px;
@@ -80,39 +104,200 @@
 
 .hero-content p {
   font-size: 18px;
-  color: #666;
-  margin-bottom: 40px;
+  color: #555;
+  margin-bottom: 35px;
   line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 15px;
 }
 
 .hero-actions .btn-primary {
   background-color: var(--proempresa-blue-light);
   color: white;
-  border: none;
-  padding: 15px 30px;
-  font-size: 16px;
+  text-decoration: none;
+  padding: 14px 28px;
+  font-size: 15px;
   font-weight: 600;
   border-radius: 6px;
-  cursor: pointer;
-  margin-right: 15px;
+  display: inline-block;
+  transition: background 0.3s;
+}
+
+.hero-actions .btn-primary:hover {
+  background-color: var(--proempresa-blue-dark);
 }
 
 .hero-actions .btn-secondary {
   background-color: transparent;
   color: var(--proempresa-blue-light);
   border: 2px solid var(--proempresa-blue-light);
-  padding: 13px 30px;
-  font-size: 16px;
+  padding: 12px 28px;
+  font-size: 15px;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
 }
 
+/* Tarjeta informativa lateral */
 .badge-card {
   background-color: var(--proempresa-blue-dark);
   color: white;
-  padding: 30px;
+  padding: 35px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,51,102,0.2);
   text-align: center;
+  max-width: 280px;
+}
+
+.badge-card h3 {
+  color: var(--proempresa-orange);
+  margin-top: 0;
+}
+
+.badge-tag {
+  display: inline-block;
+  margin-top: 15px;
+  background-color: rgba(255,255,255,0.15);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+/* Contenedores Genéricos de Secciones */
+.section-container {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+.bg-white { background-color: #ffffff; }
+.bg-gray { background-color: #f4f6f9; }
+.bg-dark { background-color: #112233; }
+.text-white { color: #ffffff; }
+
+.section-title {
+  font-size: 32px;
+  color: var(--proempresa-blue-dark);
+  margin-bottom: 10px;
+}
+
+.text-white .section-title {
+  color: #ffffff;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+.text-white .section-subtitle {
+  color: #ccc;
+}
+
+/* Grilla de Tarjetas */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.business-card {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align: left;
+  border-top: 4px solid var(--proempresa-blue-light);
+  position: relative;
+}
+
+.business-card.saving {
+  border-top-color: var(--proempresa-orange);
+}
+
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.business-card h3 {
+  margin: 0 0 12px 0;
+  color: #222;
+  font-size: 20px;
+}
+
+.business-card p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Insignias de Tasa de Ahorro TREA */
+.rate-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #e6f7ed;
+  color: #1e7e34;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+/* Sección Nosotros */
+.about-box {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #eef3f7;
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.about-box h2 {
+  color: var(--proempresa-blue-dark);
+  margin-top: 0;
+}
+
+.about-box p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+}
+
+/* Sección Canales */
+.channels-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.channel-item span {
+  font-size: 35px;
+}
+
+.channel-item h4 {
+  margin: 10px 0 5px 0;
+  font-size: 18px;
+}
+
+.channel-item p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* Footer */
+.main-footer {
+  background-color: #0b1521;
+  color: #778899;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  border-top: 1px solid #1a2a3a;
 }

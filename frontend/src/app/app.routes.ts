@@ -5,19 +5,23 @@ import { LoginFormComponent } from './components/login-form/login-form';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 
+// Nuevas páginas públicas importadas con tu misma estructura limpia
+import { ProductosComponent } from './components/productos/productos';
+import { ServiciosComponent } from './components/servicios/servicios';
+import { CanalesComponent } from './components/canales/canales';
+import { ContactoComponent } from './components/contacto/contacto';
+
 export const routes: Routes = [
-  // [C1] Pagina Home (index) con branding ProEmpresa
   { path: '', component: HomeComponent },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'servicios', component: ServiciosComponent },
+  { path: 'canales', component: CanalesComponent },
+  { path: 'contacto', component: ContactoComponent },
   
-  // [C2] Interfaz previa: Pantalla de "Banca por Internet"
+  // Rutas de Banca por Internet
   { path: 'banca-por-internet', component: LoginLandingComponent },
-  
-  // [C3] Formulario de Login conectado a la BD
   { path: 'login', component: LoginFormComponent },
-  
-  // [C5] Dashboard con los datos del usuario (Protegido por el guardia)
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   
-  // Redirección por defecto si la ruta no existe
   { path: '**', redirectTo: '' }
 ];

@@ -1,14 +1,178 @@
 :root {
-  --proempresa-blue-dark: #003366;   /* Azul principal */
-  --proempresa-blue-light: #005691;  /* Azul de botones */
-  --proempresa-orange: #FF9900;      /* Naranja de acento */
-  --proempresa-gray-bg: #F4F6F9;     /* Fondo gris claro */
+  --proempresa-green: #00A859;
+  --proempresa-green-dark: #008744;
+  --proempresa-orange: #FFCC00;
+  --proempresa-blue-dark: #003366;
+  --proempresa-gray-bg: #F4F6F9;
   --proempresa-text: #333333;
 }
 
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--proempresa-gray-bg);
   color: var(--proempresa-text);
+  box-sizing: border-box;
+}
+
+/* NAVBAR BLANCA PRINCIPAL (Ahora fija en el top 0) */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8%;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--proempresa-green);
+}
+
+.logo-text .accent {
+  color: var(--proempresa-blue-dark);
+}
+
+.entity-type {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* ENLACES DEL MENÚ */
+.nav-links a {
+  margin: 0 18px;
+  text-decoration: none;
+  color: #444444;
+  font-weight: 600;
+  font-size: 15px;
+  transition: color 0.2s;
+  padding: 8px 0;
+}
+
+.nav-links a:hover, .nav-links a.active-link {
+  color: var(--proempresa-green);
+}
+
+/* BOTÓN "BANCA POR INTERNET" */
+.btn-banca {
+  background-color: var(--proempresa-green);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-banca:hover {
+  background-color: var(--proempresa-green-dark);
+}
+
+/* CUERPO DE CONTENIDO (Ajustado a 75px de separación de la Navbar) */
+.content-body {
+  margin-top: 75px; 
+  min-height: calc(100vh - 135px);
+  box-sizing: border-box;
+}
+
+/* ESTILOS DE LOS NUEVOS BOTONES INFERIORES IZQUIERDOS */
+.hero-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.hero-actions .btn-primary {
+  background-color: var(--proempresa-green);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.hero-actions .btn-primary:hover {
+  background-color: var(--proempresa-green-dark);
+}
+
+.hero-actions .btn-secondary {
+  background-color: transparent;
+  color: var(--proempresa-green);
+  border: 2px solid var(--proempresa-green);
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hero-actions .btn-secondary:hover {
+  background-color: var(--proempresa-green);
+  color: white;
+}
+
+/* FOOTER Y TARJETAS */
+.main-footer {
+  background-color: #0b1521;
+  color: #778899;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+}
+
+.page-container {
+  padding: 40px 8%;
+  box-sizing: border-box;
+}
+
+.page-title {
+  font-size: 32px;
+  color: var(--proempresa-blue-dark);
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.info-card {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border-top: 4px solid var(--proempresa-green);
 }
