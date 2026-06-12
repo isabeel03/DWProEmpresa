@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
+import { SolicitarCreditoComponent } from './components/solicitar-credito/solicitar-credito';
 
 // Nuevas páginas públicas importadas con tu misma estructura limpia
 import { ProductosComponent } from './components/productos/productos';
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'contacto', component: ContactoComponent },
   { path: 'simulador', component: SimuladorComponent },
   { path: 'core-bancario', component: DashboardAdminComponent },
+  { path: 'solicitar-credito', component: SolicitarCreditoComponent },
   
   // Rutas de Banca por Internet
   { path: 'banca-por-internet', component: LoginLandingComponent },

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root' // <-- Esto le dice a Angular que se puede inyectar en cualquier componente
@@ -26,16 +28,24 @@ login(email: string, password: string): Observable<any> {
   );
 }
 
+
+
   isLoggedIn(): boolean {
     return !!localStorage.getItem('bank_token');
   }
 
-  getUserEmail(): string | null {
-    return localStorage.getItem('user_email');
+getUserEmail() {
+  // 1. Validamos de forma segura si estamos corriendo en el navegador del cliente
+  if (isPlatformBrowser(inject(PLATFORM_ID))) {
+    return localStorage.getItem('tu_clave_aqui'); // 👈 Tu línea 34 original protegida
   }
+  return null; // Si está en el servidor, no lee nada aún y no se rompe
+}
 
   logout() {
     localStorage.removeItem('bank_token');
     localStorage.removeItem('user_email');
   }
+
+  
 }

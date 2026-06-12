@@ -43,13 +43,20 @@
       </div>
     </section>
 
-    <section class="quick-actions">
-      <h3>Operaciones Disponibles</h3>
-      <div class="actions-container">
-        <button class="action-btn" disabled>💸 Transferencias</button>
-        <button class="action-btn" disabled>📄 Ver Estado de Cuenta</button>
-        <button class="action-btn" disabled>🗓️ Cronograma de Pagos</button>
-      </div>
-    </section>
+    <div class="operaciones-container">
+  <h3>Operaciones Disponibles</h3>
+  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+    
+    <button class="btn-operacion">💸 Transferencias</button>
+    <button class="btn-operacion">📄 Ver Estado de Cuenta</button>
+    <button class="btn-operacion">📅 Cronograma de Pagos</button>
+    
+    <button routerLink="/solicitar-credito" 
+            style="background: #0056b3; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+      🚀 Solicitar Crédito
+    </button>
+
+  </div>
+</div>
   </main>
 </div>
