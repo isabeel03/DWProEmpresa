@@ -5,11 +5,14 @@ import { LoginFormComponent } from './components/login-form/login-form';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
+
 // Nuevas páginas públicas importadas con tu misma estructura limpia
 import { ProductosComponent } from './components/productos/productos';
 import { ServiciosComponent } from './components/servicios/servicios';
 import { CanalesComponent } from './components/canales/canales';
 import { ContactoComponent } from './components/contacto/contacto';
+import { SimuladorComponent } from './components/simulador/simulador';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +20,8 @@ export const routes: Routes = [
   { path: 'servicios', component: ServiciosComponent },
   { path: 'canales', component: CanalesComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'simulador', component: SimuladorComponent },
+  { path: 'core-bancario', component: DashboardAdminComponent },
   
   // Rutas de Banca por Internet
   { path: 'banca-por-internet', component: LoginLandingComponent },

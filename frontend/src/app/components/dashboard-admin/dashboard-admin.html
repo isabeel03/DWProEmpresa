@@ -1,0 +1,103 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <div>
+      <h1>Core Bancario - Panel de Riesgos y Evaluación</h1>
+      <p class="welcome-text">Bienvenido: <strong>{{ empleadoNombre }}</strong> | Rol: <span class="badge-rol">{{ empleadoRol | uppercase }}</span></p>
+    </div>
+    <button class="btn-logout" (click)="cerrarSesion()">Cerrar Sesión Interna</button>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <h3>Total Solicitudes</h3>
+      <p class="kpi-value">{{ solicitudes.length }}</p>
+    </div>
+    <div class="kpi-card kpi-verde">
+      <h3>Riesgo Bajo (Verde)</h3>
+      <p class="kpi-value">{{ contarPorSemaforo('Verde') }}</p>
+    </div>
+    <div class="kpi-card kpi-amarillo">
+      <h3>Riesgo Medio (Amarillo)</h3>
+      <p class="kpi-value">{{ contarPorSemaforo('Amarillo') }}</p>
+    </div>
+    <div class="kpi-card kpi-rojo">
+      <h3>Rechazos Automáticos (Rojo)</h3>
+      <p class="kpi-value">{{ contarPorSemaforo('Rojo') }}</p>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <h2>Bandeja de Entrada - Evaluaciones Pendientes</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente / DNI</th>
+          <th>Tipo Crédito</th>
+          <th>Monto Solicitado</th>
+          <th>Plazo</th>
+          <th>Ratio RDS</th>
+          <th>Scoring</th>
+          <th>Semáforo</th>
+          <th>Estado Actual</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sol of solicitudes">
+          <td><strong>#{{ sol.id }}</strong></td>
+          <td>
+            <div class="client-info">
+              <span>{{ sol.usuarios?.nombre || 'Cliente Registrado' }}</span>
+              <small>DNI: {{ sol.usuarios?.dni || 'N/A' }}</small>
+            </div>
+          </td>
+          <td>
+            <span class="badge-tipo">
+              {{ sol.tipo_credito === 'capital' ? 'Capital de Trabajo' : 'Activo Fijo' }}
+            </span>
+          </td>
+          <td><strong>S/. {{ sol.monto_solicitado | number:'1.2-2' }}</strong></td>
+          <td>{{ sol.plazo_meses }} meses</td>
+          <td [class.text-danger]="sol.rds_ratio > 40">
+            <strong>{{ sol.rds_ratio }}%</strong>
+          </td>
+          <td>
+            <div class="scoring-box">
+              <span>{{ sol.scoring_puntos }} pts</span>
+            </div>
+          </td>
+          <td>
+            <span class="badge-semaforo" [ngClass]="{
+              'bg-verde': sol.semaforo_riesgo === 'Verde',
+              'bg-amarillo': sol.semaforo_riesgo === 'Amarillo',
+              'bg-rojo': sol.semaforo_riesgo === 'Rojo'
+            }">
+              {{ sol.semaforo_riesgo }}
+            </span>
+          </td>
+          <td>
+            <span class="badge-estado" [ngClass]="{
+              'est-pendiente': sol.estado === 'Pendiente',
+              'est-aprobado': sol.estado === 'Aprobado',
+              'est-rechazado': sol.estado === 'Rechazado',
+              'est-desembolsado': sol.estado === 'Desembolsado'
+            }">
+              {{ sol.estado }}
+            </span>
+          </td>
+          <td>
+            <div class="actions-wrapper" *ngIf="sol.estado === 'Pendiente'">
+              <button class="btn-action btn-approve" (click)="evaluar(sol.id, 'Aprobar')">Desembolsar</button>
+              <button class="btn-action btn-reject" (click)="evaluar(sol.id, 'Rechazar')">Rechazar</button>
+            </div>
+            <span *ngIf="sol.estado !== 'Pendiente'" class="text-muted">Procesado</span>
+          </td>
+        </tr>
+        <tr *ngIf="solicitudes.length === 0">
+          <td colspan="10" class="text-center">No se encontraron solicitudes de crédito en el sistema.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

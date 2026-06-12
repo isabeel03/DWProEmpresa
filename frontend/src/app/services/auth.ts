@@ -10,16 +10,21 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
-      tap((res: any) => {
-        if (res && res.token) {
-          localStorage.setItem('bank_token', res.token);
-          localStorage.setItem('user_email', res.usuario.email);
-        }
-      })
-    );
-  }
+login(email: string, password: string): Observable<any> {
+  // 1. Añadimos '/auth' para corregir el error 404
+  return this.http.post(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+    tap((res: any) => {
+      // 2. Ajustamos las propiedades según lo que devuelve nuestro nuevo backend de FastAPI
+      if (res && res.access_token) {
+        // Guardamos el token JWT exigido por la rúbrica (Criterio 3)
+        localStorage.setItem('bank_token', res.access_token);
+        
+        // Guardamos el tipo de usuario para que sirva de control en los guardianes de rutas
+        localStorage.setItem('tipo_usuario', res.tipo_usuario);
+      }
+    })
+  );
+}
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('bank_token');

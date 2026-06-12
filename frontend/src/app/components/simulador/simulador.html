@@ -1,0 +1,65 @@
+<div class="page-container">
+  <h1 class="page-title">Simulador de Crédito Empresarial</h1>
+  <p class="page-subtitle">Calcula de forma rápida y transparente la cuota estimada para impulsar tu negocio.</p>
+
+  <div class="simulator-layout">
+    <div class="simulator-card form-box">
+      <h2>Ingresa los datos de tu solicitud</h2>
+      
+      <div class="form-group">
+        <label for="monto">¿Cuánto dinero necesitas? (S/.)</label>
+        <input type="number" id="monto" [(ngModel)]="monto" name="monto" min="1000" max="50000" step="500">
+        <small class="help-text">Monto permitido: Desde S/. 1,000 hasta S/. 50,000</small>
+      </div>
+
+      <div class="form-group">
+        <label for="cuotas">Plazo de pago (Meses)</label>
+        <select id="cuotas" [(ngModel)]="selectedCuotas" name="cuotas">
+          <option *ngFor="let mes of plazosDisponibles" [value]="mes">{{ mes }} meses</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tipoCredito">Tipo de Crédito</label>
+        <select id="tipoCredito" [(ngModel)]="tipoCredito" (change)="actualizarTasa()" name="tipoCredito">
+          <option value="capital">Capital de Trabajo (TEA: 28%)</option>
+          <option value="activo">Activo Fijo / Maquinaria (TEA: 24%)</option>
+        </select>
+      </div>
+
+      <button class="btn-calc" (click)="calcularCuota()">Calcular Cuota Mensual</button>
+    </div>
+
+    <div class="simulator-card result-box" *ngIf="simulacionCalculada">
+      <h2>Resultado de tu Simulación</h2>
+      <div class="result-highlight">
+        <span class="result-label">Cuota Mensual Estimada:</span>
+        <span class="result-value">S/. {{ cuotaEstimada | number:'1.2-2' }}</span>
+      </div>
+      
+      <div class="result-details">
+        <div class="detail-row">
+          <span>Monto Solicitado:</span>
+          <strong>S/. {{ monto | number:'1.2-2' }}</strong>
+        </div>
+        <div class="detail-row">
+          <span>Plazo elegido:</span>
+          <strong>{{ selectedCuotas }} meses</strong>
+        </div>
+        <div class="detail-row">
+          <span>Tasa Efectiva Anual (TEA):</span>
+          <strong>{{ tasaInteres * 100 }}%</strong>
+        </div>
+        <div class="detail-row">
+          <span>Total de intereses aprox:</span>
+          <strong>S/. {{ totalIntereses | number:'1.2-2' }}</strong>
+        </div>
+      </div>
+
+      <div class="result-footer">
+        <p class="disclaimer">* Esta simulación es referencial y está sujeta a evaluación crediticia. No incluye seguro de desgravamen ni comisiones.</p>
+        <button class="btn-solicitar" routerLink="/contacto">Solicitar Asesoría Comercial</button>
+      </div>
+    </div>
+  </div>
+</div>
