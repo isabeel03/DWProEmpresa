@@ -1,126 +1,248 @@
-<div class="admin-container" style="padding: 30px; font-family: sans-serif; background: #fafafa; min-height: 100vh;">
+<div class="admin-dashboard-wrapper">
   
-  <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
-    <div>
-      <h2 style="color: #0056b3; margin: 0;">Core Bancario ProEmpresa</h2>
-      <p style="color: #666; margin: 5px 0 0 0;">Bienvenido(a), <strong>{{ empleadoNombre }}</strong> | Rol: <span style="text-transform: uppercase; color: #e67e22; font-weight: bold;">{{ empleadoRol }}</span></p>
+  <header class="admin-top-nav">
+    <div class="nav-branding">
+      <span class="bank-logo-title">ProEmpresa</span>
+      <span class="nav-divider">|</span>
+      <span class="nav-subtitle">Core Bancario Operativo</span>
     </div>
-    <button (click)="cerrarSesion()" style="background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-      🚪 Cerrar Sesión
-    </button>
+    <div class="nav-profile-actions">
+      <div class="user-meta">
+        <span class="user-name">Bienvenido(a), <strong>{{ empleadoNombre }}</strong></span>
+        <span class="role-pill">{{ empleadoRol | uppercase }}</span>
+      </div>
+      <button class="btn-logout-exec" (click)="cerrarSesion()">
+        Cerrar Sesión 🚪
+      </button>
+    </div>
+  </header>
+
+  <section class="kpi-dashboard-grid">
+    <div class="kpi-panel-card card-green">
+      <div class="kpi-header-row">
+        <h5>🟢 Riesgo Bajo</h5>
+        <span class="indicator-dot dot-green"></span>
+      </div>
+      <p class="kpi-main-value">{{ contarPorSemaforo('Verde') }}</p>
+      <small>Pasan a evaluación regular</small>
+    </div>
+
+    <div class="kpi-panel-card card-yellow">
+      <div class="kpi-header-row">
+        <h5>🟡 En Observación</h5>
+        <span class="indicator-dot dot-yellow"></span>
+      </div>
+      <p class="kpi-main-value">{{ contarPorSemaforo('Amarillo') }}</p>
+      <small>Requieren revisión minuciosa</small>
+    </div>
+
+    <div class="kpi-panel-card card-red">
+      <div class="kpi-header-row">
+        <h5>🔴 Riesgo Crítico</h5>
+        <span class="indicator-dot dot-red"></span>
+      </div>
+      <p class="kpi-main-value">{{ contarPorSemaforo('Rojo') }}</p>
+      <small>Superan límites permitidos</small>
+    </div>
+
+    <div class="kpi-panel-card card-blue">
+      <div class="kpi-header-row">
+        <h5>📊 Volumen Total</h5>
+        <span class="indicator-dot dot-blue"></span>
+      </div>
+      <p class="kpi-main-value">S/ {{ (totalMontoSolicitado / 1000) | number:'1.1-1' }}K</p>
+      <small>Promedio: S/ {{ montoPromedioSolicitado | number:'1.0-0' }}</small>
+    </div>
+  </section>
+
+  <div class="navigation-tabs-wrapper">
+    <div class="tabs-buttons-group">
+      <button class="tab-action-link" 
+              (click)="vistaActual = 'solicitudes'" 
+              [class.active-tab]="vistaActual === 'solicitudes'">
+        📥 Bandeja de Otorgamientos
+      </button>
+      <button *ngIf="empleadoRol === 'administrador' || empleadoRol === 'comite' || empleadoRol === 'jefe_regional'" 
+              class="tab-action-link" 
+              (click)="vistaActual = 'mora'" 
+              [class.active-tab]="vistaActual === 'mora'">
+        ⚠️ Cartera con Problemas (Mora)
+      </button>
+    </div>
+    <div class="tray-count-label">
+      {{ vistaActual === 'solicitudes' ? solicitudes.length : bandejaMora.length }} registros listos en bandeja
+    </div>
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <button (click)="vistaActual = 'solicitudes'" 
-            [style.background]="vistaActual === 'solicitudes' ? '#0056b3' : '#e9ecef'"
-            [style.color]="vistaActual === 'solicitudes' ? 'white' : '#333'"
-            style="border: none; padding: 10px 20px; border-radius: 4px 4px 0 0; cursor: pointer; font-weight: bold; margin-right: 5px;">
-      📥 Bandeja de Otorgamientos
-    </button>
-    <button *ngIf="empleadoRol === 'administrador' || empleadoRol === 'comite' || empleadoRol === 'jefe_regional'" 
-            (click)="vistaActual = 'mora'" 
-            [style.background]="vistaActual === 'mora' ? '#0056b3' : '#e9ecef'"
-            [style.color]="vistaActual === 'mora' ? 'white' : '#333'"
-            style="border: none; padding: 10px 20px; border-radius: 4px 4px 0 0; cursor: pointer; font-weight: bold;">
-      ⚠️ Cartera con Problemas (Mora)
-    </button>
-  </div>
-
-  <div *ngIf="vistaActual === 'solicitudes'">
-    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden;">
-      <thead>
-        <tr style="background: #343a40; color: white; text-align: left;">
-          <th style="padding: 12px 15px;">ID</th>
-          <th style="padding: 12px 15px;">Código Cliente</th>
-          <th style="padding: 12px 15px;">Monto Solicitado</th>
-          <th style="padding: 12px 15px;">Ratio R.D.S.</th>
-          <th style="padding: 12px 15px;">Scoring</th>
-          <th style="padding: 12px 15px;">Semáforo</th>
-          <th style="padding: 12px 15px;">Estado</th>
-          <th style="padding: 12px 15px; text-align: center;">Acciones Operativas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let sol of solicitudes" style="border-bottom: 1px solid #eee;">
-          <td style="padding: 12px 15px; font-weight: bold;">#{{ sol.id }}</td>
-          <td style="padding: 12px 15px; color: #555;">{{ sol.cliente_codigo_desarrollo || sol.cliente_id }}</td>
-          <td style="padding: 12px 15px; font-weight: bold; color: #0056b3;">S/ {{ sol.monto_solicitado | number:'1.2-2' }}</td>
-          <td style="padding: 12px 15px;">{{ sol.rds_ratio }}%</td>
-          <td style="padding: 12px 15px;"><span style="background: #e9ecef; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: bold;">{{ sol.scoring_puntos }} pts</span></td>
-          <td style="padding: 12px 15px;">
-            <span [style.background]="sol.semaforo_riesgo === 'Verde' ? '#28a745' : sol.semaforo_riesgo === 'Amarillo' ? '#ffc107' : '#dc3545'"
-                  style="color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">
-              {{ sol.semaforo_riesgo }}
-            </span>
-          </td>
-          <td style="padding: 12px 15px; font-weight: bold;" [style.color]="sol.estado === 'Desembolsado' ? '#28a745' : sol.estado === 'Rechazado' ? '#dc3545' : '#ffc107'">
-            {{ sol.estado }}
-          </td>
-          <td style="padding: 12px 15px; text-align: center;">
-            <div *ngIf="sol.estado === 'Pendiente' || sol.estado === 'Enviado a Comité'">
-              
-              <button *ngIf="empleadoRol === 'asesor' && sol.estado === 'Pendiente'" (click)="escalarAComite(sol.id)" style="background: #17a2b8; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                ↗ Enviar a Comité
-              </button>
-
-              <div *ngIf="empleadoRol === 'comite' || empleadoRol === 'administrador'">
-                <button (click)="evaluar(sol.id, 'Aprobar')" style="background: #28a745; color: white; border: none; padding: 6px 12px; margin-right: 5px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                  ✔ Aprobar
-                </button>
-                <button (click)="evaluar(sol.id, 'Rechazar')" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                  ✖ Rechazar
-                </button>
+  <main class="dashboard-main-content">
+    
+    <div *ngIf="vistaActual === 'solicitudes'" class="table-executive-card">
+      <table class="banking-core-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>CÓDIGO CLIENTE</th>
+            <th>MONTO SOLICITADO</th>
+            <th>RATIO R.D.S.</th>
+            <th>SCORING</th>
+            <th>SEMÁFORO</th>
+            <th>ESTADO EXPEDIENTE</th>
+            <th class="text-center">ACCIONES OPERATIVAS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sol of solicitudes">
+            <td class="cell-id">#{{ sol.id }}</td>
+            <td class="cell-muted">{{ sol.cliente_id }}</td>
+            <td class="cell-bold-amount">S/ {{ sol.monto_solicitado | number:'1.2-2' }}</td>
+            <td>
+              <div class="ratio-container">
+                <span class="ratio-num">{{ sol.rds_ratio }}%</span>
+                <div class="mini-bar">
+                  <div class="mini-fill" [style.width.%]="sol.rds_ratio > 100 ? 100 : sol.rds_ratio"></div>
+                </div>
               </div>
+            </td>
+            <td><span class="scoring-pill">{{ sol.scoring_puntos || 0 }} pts</span></td>
+            <td>
+              <span class="semaphore-pill-clean" 
+                    [ngClass]="{'pill-green': sol.semaforo_riesgo === 'Verde', 'pill-yellow': sol.semaforo_riesgo === 'Amarillo', 'pill-red': sol.semaforo_riesgo === 'Rojo'}">
+                {{ sol.semaforo_riesgo || 'Verde' }}
+              </span>
+            </td>
+            <td>
+              <span class="state-text-bold" 
+                    [ngClass]="{'txt-green': sol.estado === 'Desembolsado' || sol.estado === 'Aprobado', 'txt-red': sol.estado === 'Rechazado', 'txt-yellow': sol.estado === 'Pendiente' || sol.estado === 'Enviado a Comité'}">
+                {{ sol.estado }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="actions-flex-container justify-center">
+                <button *ngIf="sol.estado === 'Pendiente' || sol.estado === 'Enviado a Comité'" 
+                        class="btn-core-action btn-core-info" 
+                        (click)="abrirEvaluacion(sol)">
+                  Evaluar 🔍
+                </button>
+                <span *ngIf="sol.estado !== 'Pendiente' && sol.estado !== 'Enviado a Comité'" class="lbl-attended">
+                  Atendido ✓
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-            </div>
-            <div *ngIf="sol.estado !== 'Pendiente' && sol.estado !== 'Enviado a Comité'">
-              <span style="color: #999; font-size: 13px; font-style: italic;">Atendido</span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="vistaActual === 'mora'" class="table-executive-card">
+      <table class="banking-core-table table-mora-custom">
+        <thead>
+          <tr>
+            <th>CRÉDITO ID</th>
+            <th>CLIENTE ASIGNADO</th>
+            <th>MONTO DESEMBOLSADO</th>
+            <th>DÍAS DE MORA</th>
+            <th>CLASIFICACIÓN (BANDA)</th>
+            <th class="text-center">ACCIONES LEGALES / CONTABLES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mor of bandejaMora">
+            <td class="cell-id">#{{ mor.id }}</td>
+            <td class="cell-muted">{{ mor.cliente_codigo_desarrollo || mor.cliente_id }}</td>
+            <td class="cell-bold-amount text-dark-blue">S/ {{ mor.monto_desembolsado | number:'1.2-2' }}</td>
+            <td class="cell-alert-days">{{ mor.dias_mora }} días atrasados</td>
+            <td>
+              <span class="mora-band-badge" [ngClass]="{'band-judicial': mor.banda_mora === 'Judicial', 'band-castigo': mor.banda_mora === 'Castigo'}">
+                {{ mor.banda_mora }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="actions-flex-container justify-center">
+                <button *ngIf="mor.dias_mora >= 121 && mor.banda_mora !== 'Judicial' && mor.banda_mora !== 'Castigo'"
+                        (click)="procesarAccionCobranza(mor.id, 'Derivar Judicial')"
+                        class="btn-core-action btn-core-warning">
+                  ⚖ Derivar Judicial
+                </button>
+                
+                <button *ngIf="mor.dias_mora > 180 && mor.banda_mora !== 'Castigo'"
+                        (click)="procesarAccionCobranza(mor.id, 'Castigar')"
+                        class="btn-core-action btn-core-dark">
+                  💀 Castigar Crédito
+                </button>
+                <span *ngIf="mor.banda_mora === 'Judicial' || mor.banda_mora === 'Castigo'" class="lbl-process-ended">
+                  Proceso Ejecutivo Iniciado
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<div class="modal-overlay" *ngIf="modalEvaluacion">
+  <div class="modal-card evaluation-modal">
+    
+    <div class="modal-header">
+      <div>
+        <h3>Evaluar solicitud de crédito</h3>
+        <p class="modal-subtitle">ID #{{ solicitudSeleccionada?.id }} · Cliente: {{ solicitudSeleccionada?.cliente_id }}</p>
+      </div>
+      <button class="close-x" (click)="cerrarModalEvaluacion()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="info-summary-grid">
+        <div class="info-box-mini">
+          <span class="lbl">Monto solicitado</span>
+          <div class="val text-blue">S/ {{ solicitudSeleccionada?.monto_solicitado | number:'1.2-2' }}</div>
+        </div>
+        <div class="info-box-mini">
+          <span class="lbl">Plazo</span>
+          <div class="val">{{ solicitudSeleccionada?.plazo_meses || 12 }} meses</div>
+        </div>
+        <div class="info-box-mini">
+          <span class="lbl">Score</span>
+          <div class="val points">{{ solicitudSeleccionada?.scoring_puntos || 0 }} pts</div>
+        </div>
+        <div class="info-box-mini">
+          <span class="lbl">Ratio C/I (RDS)</span>
+          <div class="val ratio-color">{{ solicitudSeleccionada?.rds_ratio || '0.00' }}%</div>
+        </div>
+      </div>
+
+      <div class="system-alert-badge" [ngClass]="solicitudSeleccionada?.semaforo_riesgo | lowercase">
+        🚀 El sistema califica este riesgo como: <strong>{{ solicitudSeleccionada?.semaforo_riesgo || 'VERDE' | uppercase }}</strong>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px;">
+        <label class="form-main-label">Observación del evaluador</label>
+        <textarea 
+          class="input-control textarea-observacion" 
+          [(ngModel)]="observacionEvaluador" 
+          placeholder="Escribe el motivo de la decisión (opcional)...">
+        </textarea>
+      </div>
+
+      <div class="action-buttons-row">
+        <button class="btn-action-dismiss" (click)="cerrarModalEvaluacion()">Cancelar</button>
+        
+        <div class="decision-group">
+          <button class="btn-action-reject" (click)="procesarDecision('Rechazado')">
+            ✕ Rechazar
+          </button>
+          
+          <button 
+            class="btn-action-approve" 
+            [ngClass]="{'disabled-btn': solicitudSeleccionada?.semaforo_riesgo === 'Rojo'}"
+            (click)="procesarDecision('Aprobado')">
+            ✓ Aprobar crédito
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <div *ngIf="vistaActual === 'mora'">
-    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden;">
-      <thead>
-        <tr style="background: #85144b; color: white; text-align: left;">
-          <th style="padding: 12px 15px;">Crédito ID</th>
-          <th style="padding: 12px 15px;">Cliente</th>
-          <th style="padding: 12px 15px;">Monto Prestado</th>
-          <th style="padding: 12px 15px;">Días de Mora</th>
-          <th style="padding: 12px 15px;">Clasificación (Banda)</th>
-          <th style="padding: 12px 15px; text-align: center;">Acciones Legales / Contables</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let mor of bandejaMora" style="border-bottom: 1px solid #eee;">
-          <td style="padding: 12px 15px; font-weight: bold;">#{{ mor.id }}</td>
-          <td style="padding: 12px 15px;">{{ mor.cliente_codigo_desarrollo || mor.cliente_id }}</td>
-          <td style="padding: 12px 15px; font-weight: bold;">S/ {{ mor.monto_desembolsado | number:'1.2-2' }}</td>
-          <td style="padding: 12px 15px; color: #dc3545; font-weight: bold;">{{ mor.dias_mora }} días</td>
-          <td style="padding: 12px 15px;">
-            <span style="background: #ffdbdb; color: #85144b; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: bold;">
-              {{ mor.banda_mora }}
-            </span>
-          </td>
-          <td style="padding: 12px 15px; text-align: center;">
-            <button *ngIf="mor.dias_mora >= 121 && mor.banda_mora !== 'Judicial' && mor.banda_mora !== 'Castigo'"
-                    (click)="procesarAccionCobranza(mor.id, 'Derivar Judicial')"
-                    style="background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 5px;">
-              ⚖ Derivar Judicial
-            </button>
-            
-            <button *ngIf="mor.dias_mora > 180 && mor.banda_mora !== 'Castigo'"
-                    (click)="procesarAccionCobranza(mor.id, 'Castigar')"
-                    style="background: #333; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-              💀 Castigar Crédito
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 </div>

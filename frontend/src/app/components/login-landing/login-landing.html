@@ -1,18 +1,50 @@
-<div class="landing-secure-container">
-  <div class="secure-box">
-    <div class="shield-icon">🔒</div>
+<div class="login-wrapper">
+  
+  <div class="login-container">
     
-    <h2>Banca por Internet</h2>
-    <p class="bank-name">Pro<span class="accent">Empresa</span></p>
-    
-    <div class="secure-badge">
-      <p>⚠️ <strong>Zona Segura:</strong> Verifique que la URL comience con https y cuente con el certificado oficial del banco antes de ingresar sus datos.</p>
+    <div class="identity-panel">
+      <div class="brand-area">
+        <span class="logo-text">Pro<span class="accent-green">Empresa</span></span>
+        <small class="entity-type">financiera</small>
+      </div>
+      
+      <div class="lock-visual">
+        <div class="lock-shield">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.68629 2 6 4.68629 6 8V10H4V22H20V10H18V8C18 4.68629 15.3137 2 12 2ZM12 4C14.2091 4 16 5.79086 16 8V10H8V8C8 5.79086 9.79086 4 12 4ZM6 12H18V20H6V12ZM11 14V18H13V14H11Z" fill="#CBDF90"/>
+          </svg>
+        </div>
+      </div>
+      
+      <h1 class="welcome-title">Banca por Internet</h1>
+      <p class="welcome-subtitle">Bienvenido a su canal seguro y digital.</p>
     </div>
 
-    <p class="instruction">Para realizar tus operaciones, consultas de saldo, estado de cuenta y cronogramas, ingresa al sistema seguro.</p>
-    
-    <button class="btn-enter" routerLink="/login">Ingresar a mi Cuenta</button>
-    
-    <a routerLink="/" class="btn-back">Volver al inicio</a>
+    <div class="action-panel">
+      
+      <div class="security-alert-box">
+        <div class="alert-header">
+          <span class="alert-icon">🛡️</span>
+          <h3>Zona Segura</h3>
+        </div>
+        <p>
+          Verifique que la URL comience con <strong>https</strong> y cuente con el certificado oficial del banco antes de ingresar sus datos.
+        </p>
+      </div>
+
+      <p class="info-text">
+        Acceda para realizar consultas, pagos, transferencias y gestionar sus productos financieros con total tranquilidad.
+      </p>
+
+      <button class="btn-primary-login" routerLink="/login">
+        Ingresar a mi Cuenta
+      </button>
+
+      <div class="back-link-container">
+        <a routerLink="/" class="btn-back-home">Volver al portal principal</a>
+      </div>
+    </div>
+
   </div>
+
 </div>

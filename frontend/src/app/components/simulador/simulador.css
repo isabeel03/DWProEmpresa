@@ -1,0 +1,252 @@
+.simulador-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc;
+}
+
+.simulador-main-title {
+  margin-bottom: 35px;
+}
+.simulador-main-title h1 {
+  color: #1B4079; /* Yale Blue */
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+.simulador-main-title p {
+  color: #4D7C8A; /* Air Force Blue */
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Grid de dos columnas */
+.simulador-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.card-pane {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(27, 64, 121, 0.04);
+  box-sizing: border-box;
+}
+
+.pane-subtitle {
+  font-size: 19px;
+  color: #1B4079;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-weight: 700;
+  border-bottom: 1px solid #edf2f1;
+  padding-bottom: 10px;
+}
+
+/* Campos de Formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+.form-input, .form-select, .form-select-clean {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(77, 124, 138, 0.25);
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+}
+.form-input:focus, .form-select:focus {
+  border-color: #1B4079;
+  outline: none;
+}
+.product-desc {
+  color: #4D7C8A;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Subgrid de 3 Columnas */
+.form-triple-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+.suffix-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-suffix {
+  position: absolute;
+  right: 12px;
+  font-weight: bold;
+  color: #7F9C96;
+}
+
+/* Estilo de Radios Corporativos */
+.form-section {
+  margin-bottom: 20px;
+}
+.radio-row {
+  display: flex;
+  gap: 25px;
+}
+.radio-row.compact {
+  gap: 12px;
+}
+.custom-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.custom-radio input[type="radio"] {
+  display: none;
+}
+.radio-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #8FAD88; /* Cambridge Blue */
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+.custom-radio input[type="radio"]:checked + .radio-circle {
+  border-color: #1B4079;
+  background-color: #CBDF90; /* Mindaro */
+}
+.custom-radio input[type="radio"]:checked + .radio-circle::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #1B4079;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Cajas de Seguros */
+.insurance-box {
+  background: #fafbfa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #8FAD88;
+  margin-bottom: 15px;
+}
+.insurance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.info-icon {
+  background: #4D7C8A;
+  color: white;
+  border-radius: 50%;
+  padding: 0px 5px;
+  font-size: 11px;
+}
+
+/* LADO DERECHO - PANEL DE RESULTADOS EXPANSIÓN */
+.results-pane {
+  border-left: 5px solid #8FAD88;
+}
+
+.cuota-hero-box {
+  background: rgba(203, 223, 144, 0.15);
+  border: 1px solid rgba(143, 173, 136, 0.25);
+  padding: 22px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+.hero-label {
+  font-size: 13px;
+  color: #4D7C8A;
+  font-weight: 600;
+}
+.hero-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: #8FAD88;
+  margin-top: 5px;
+}
+
+/* Tabla del Reporte */
+.financial-summary-table {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 25px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid #edf2f1;
+  font-size: 14px;
+}
+.summary-row.total-row {
+  border-top: 2px solid #1B4079;
+  margin-top: 5px;
+  font-weight: bold;
+  border-bottom: none;
+}
+.summary-row span {
+  color: #64748b;
+}
+.summary-row strong {
+  color: #1B4079;
+}
+.text-blue {
+  color: #1B4079 !important;
+  font-size: 16px;
+}
+
+.disclaimer-container {
+  font-size: 12px;
+  color: #7F9C96;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Botón Ovalado Verde de Éxito */
+.btn-primary-pro {
+  width: 100%;
+  background: #8FAD88;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 4px 12px rgba(143, 173, 136, 0.2);
+}
+.btn-primary-pro:hover {
+  background: #76916f;
+}
+
+@media (max-width: 768px) {
+  .simulador-grid {
+    grid-template-columns: 1fr;
+  }
+}

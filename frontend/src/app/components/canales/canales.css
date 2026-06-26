@@ -1,0 +1,172 @@
+/* ==========================================================================
+   ESTILOS COMPONENTE CANALES - PALETA OFICIAL
+   ========================================================================== */
+
+.canales-container {
+  padding: 40px 4%;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.canales-header {
+  margin-bottom: 40px;
+}
+.canales-header h2 {
+  color: #1B4079; /* Yale Blue */
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+.canales-header .subtitle {
+  color: #4D7C8A; /* Air Force Blue */
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Grilla en dos columnas paralelas */
+.canales-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Tarjeta Base */
+.canal-card {
+  background: #ffffff;
+  border: 1px solid rgba(77, 124, 138, 0.15);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(27, 64, 121, 0.02);
+  transition: transform 0.2s ease;
+}
+.canal-card:hover {
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 14px;
+}
+
+.canal-card h3 {
+  color: #1B4079;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.canal-card p {
+  color: #4D7C8A;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 18px 0;
+  min-height: 42px;
+}
+
+/* Identificadores Cromáticos */
+.card-yale { border-top: 4px solid #1B4079; }
+.card-airforce { border-top: 4px solid #4D7C8A; }
+
+/* Contenedores de Acciones */
+.card-action-box {
+  border-top: 1px solid rgba(77, 124, 138, 0.1);
+  padding-top: 14px;
+}
+
+.btn-action {
+  width: 100%;
+  background: rgba(77, 124, 138, 0.08);
+  color: #1B4079;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-action:hover {
+  background: rgba(77, 124, 138, 0.15);
+}
+
+/* Contenidos Desplegables Interactivos */
+.desplegable-content {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-item {
+  background: rgba(77, 124, 138, 0.02);
+  border-left: 3px solid #1B4079;
+  padding: 10px 12px;
+  border-radius: 0 6px 6px 0;
+}
+.option-item strong {
+  color: #1B4079;
+  font-size: 13.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+.option-item p {
+  margin: 0;
+  font-size: 12.5px;
+  color: #4D7C8A;
+  min-height: auto;
+}
+
+/* Buscador de agencias */
+.search-box {
+  margin-bottom: 5px;
+}
+.min-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(77, 124, 138, 0.3);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #1B4079;
+  outline: none;
+}
+
+/* Lista de agencias resultantes */
+.agencias-list {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+.agencia-item {
+  background: rgba(127, 156, 150, 0.05);
+  border: 1px solid rgba(127, 156, 150, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.agencia-item strong {
+  color: #1B4079;
+  font-size: 13px;
+}
+.agencia-item span {
+  color: #4D7C8A;
+  font-size: 12px;
+}
+.agencia-item small {
+  color: #7F9C96; /* Cambridge Blue para metadatos sutiles */
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  .canales-grid {
+    grid-template-columns: 1fr;
+  }
+}

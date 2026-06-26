@@ -1,115 +1,154 @@
-.login-container {
+.login-wrapper {
+  background-color: #f4f6f9;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: var(--proempresa-gray-bg);
+  justify-content: center;
   padding: 20px;
-}
-
-.login-card {
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.login-card h2 {
-  margin: 0;
-  color: var(--proempresa-blue-dark);
-  font-size: 24px;
-  text-align: center;
-}
-
-.subtitle {
-  text-align: center;
-  color: #666;
-  font-size: 14px;
-  margin-top: 5px;
-  margin-bottom: 25px;
-}
-
-.subtitle .accent {
-  color: var(--proempresa-orange);
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #444;
-  margin-bottom: 6px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 15px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: var(--proempresa-blue-light);
+.login-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  padding: 35px 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
+.brand-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.main-title {
+  color: #00875a; /* Verde ProEmpresa */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+}
+
+.subtitle {
+  color: #4a5568;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Pestañas de Navegación */
+.tabs-container {
+  display: flex;
+  background: #edf2f7;
+  padding: 4px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+.tab-button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.tab-button.active {
+  background: #ffffff;
+  color: #003366; /* Azul Oscuro */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs y Formularios */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 6px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hint-tag {
+  font-size: 11px;
+  color: #00875a;
+  background: #e6f4ea;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #00875a;
+}
+
+/* Botón de Acción */
 .btn-submit {
   width: 100%;
-  background-color: var(--proempresa-blue-dark);
-  color: white;
+  background: #00875a; /* Verde Institucional */
+  color: #ffffff;
   border: none;
   padding: 14px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s;
+  transition: background 0.2s;
 }
 
-.btn-submit:hover {
-  background-color: var(--proempresa-blue-light);
+.btn-submit:hover:not(:disabled) {
+  background: #006c48;
 }
 
 .btn-submit:disabled {
-  background-color: #aaa;
+  background: #a0aec0;
   cursor: not-allowed;
 }
 
-/* Estilos de las Alertas Evaluadas en C4 */
+/* Alertas */
 .alert {
   padding: 12px;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 13px;
   margin-bottom: 20px;
-  font-weight: 500;
+  text-align: left;
 }
 
 .alert-error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background: #fff5f5;
+  color: #c53030;
+  border: 1px solid #fed7d7;
 }
 
 .alert-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.btn-back {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: #005691;
-  text-decoration: none;
-  font-size: 14px;
+  background: #f0fff4;
+  color: #2f855a;
+  border: 1px solid #c6f6d5;
 }

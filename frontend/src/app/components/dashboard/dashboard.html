@@ -1,62 +1,233 @@
 <div class="dashboard-container">
-  <header class="dashboard-header">
-    <div class="brand">
-      <span class="logo-text">Pro<span class="accent">Empresa</span></span>
-      <span class="badge-banca">Banca por Internet</span>
+  <header class="bank-header">
+    <div class="logo-brand">
+      ProEmpresa <span class="badge-internet">Banca por Internet</span>
     </div>
-    <div class="user-profile">
-      <span class="welcome-text">Bienvenido(a), <strong>{{ userEmail }}</strong></span>
-      <button class="btn-logout" (click)="onLogout()">Cerrar Sesión 🚪</button>
+    <div>
+      <span class="welcome-text">
+        Bienvenido(a), <strong>{{ cliente?.nombre || 'Roberto Carlos' }} (Modo Respaldo)</strong>
+      </span>
+      <button class="btn-logout" (click)="cerrarSesion()">Cerrar Sesión ⟪</button>
     </div>
   </header>
 
-  <main class="dashboard-content">
-    <section class="summary-card">
-      <h2>Resumen de tus Cuentas Empresariales</h2>
-      <p class="subtitle">Consulta los saldos de tus productos financieros en tiempo real.</p>
+  <section class="section-card">
+    <h2 class="section-title">Resumen de tus Cuentas Empresariales</h2>
+    <p class="section-subtitle">Consulta los saldos de tus productos financieros en tiempo real.</p>
+    
+    <div class="accounts-grid">
+      <div class="account-mini-card">
+        <div>
+          <div class="card-label">Cuenta Ahorro Negocio</div>
+          <div class="card-sublabel">N° Cuenta: {{ cliente?.numeroCuenta || '450-3321948-0-12' }}</div>
+        </div>
+        <div class="amount-display">S/. {{ (cliente?.saldoAhorros || 15450.00) | number:'1.2-2' }}</div>
+      </div>
 
-      <div class="products-grid">
-        <div class="product-card account">
-          <div class="card-icon">💰</div>
-          <div class="card-info">
-            <h3>Cuenta Ahorro Negocio</h3>
-            <p class="account-number">N° Cuenta: 450-3321948-0-12</p>
-          </div>
-          <div class="card-balance">
-            <span class="currency">S/</span>
-            <span class="amount">15,450.00</span>
+      <div class="account-mini-card credit">
+        <div>
+          <div class="card-label">Crédito Capital de Trabajo</div>
+          <div class="card-sublabel">N° Contrato: CR-88341-PR</div>
+        </div>
+        <div class="amount-display alert-red">
+          S/. {{ (cliente?.creditoPendiente || 8200.00) | number:'1.2-2' }}
+          <span class="saldo-lbl">Saldo pendiente</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-card">
+    <h2 class="section-title">Simulador de Ofertas de Crédito Interno</h2>
+    <p class="section-subtitle">Modifica los parámetros y evalúa tu próximo desembolso con las tasas del reporte oficial.</p>
+
+    <div class="simulator-layout">
+      <div class="form-inputs-co">
+        <div class="form-group">
+          <label class="form-main-label">Tipo de crédito</label>
+          <div class="radio-row-container">
+            <label class="radio-inline-label">
+              <input type="radio" name="tipo" value="Negocios" [(ngModel)]="tipoCredito" (change)="recalcularSimulacion()"> Negocios
+            </label>
+            <label class="radio-inline-label">
+              <input type="radio" name="tipo" value="Personas" [(ngModel)]="tipoCredito" (change)="recalcularSimulacion()"> Personas
+            </label>
           </div>
         </div>
 
-        <div class="product-card credit">
-          <div class="card-icon">📈</div>
-          <div class="card-info">
-            <h3>Crédito Capital de Trabajo</h3>
-            <p class="account-number">N° Contrato: CR-88341-PR</p>
+        <div class="form-group">
+          <label class="form-main-label">Seleccione Producto</label>
+          <select class="input-control" [(ngModel)]="productoSeleccionado" (change)="recalcularSimulacion()">
+            <option value="CONSUMO DIRECTO">CONSUMO DIRECTO</option>
+            <option value="CAPITAL DE TRABAJO">CAPITAL DE TRABAJO</option>
+            <option value="ACTIVO FIJO">ACTIVO FIJO</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-main-label">Importe a simular (S/.)</label>
+          <input type="number" class="input-control" [(ngModel)]="montoSolicitado" (ngModelChange)="recalcularSimulacion()" placeholder="0">
+        </div>
+
+        <div class="triple-grid-row">
+          <div class="form-group">
+            <label class="form-main-label">TEA aplicable</label>
+            <select class="input-control" [(ngModel)]="teaAplicable" (change)="recalcularSimulacion()">
+              <option [ngValue]="71.76">71.76%</option>
+              <option [ngValue]="45.50">45.50%</option>
+              <option [ngValue]="32.10">32.10%</option>
+            </select>
           </div>
-          <div class="card-balance debt">
-            <span class="currency">S/</span>
-            <span class="amount">8,200.00</span>
-            <small class="debt-label">Saldo pendiente</small>
+          <div class="form-group">
+            <label class="form-main-label">N° Cuotas</label>
+            <input type="number" class="input-control" [(ngModel)]="numCuotas" (ngModelChange)="recalcularSimulacion()" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label class="form-main-label">Desembolso</label>
+            <input type="date" class="input-control" [(ngModel)]="fechaDesembolso">
+          </div>
+        </div>
+
+        <div class="insurance-box">
+          <label class="form-main-label">Seguro Desgravamen (0.095%)</label>
+          <div class="radio-row-container">
+            <label class="radio-inline-label">
+              <input type="radio" name="seguro" value="si" [(ngModel)]="seguroDesgravamen" (change)="recalcularSimulacion()"> Sí
+            </label>
+            <label class="radio-inline-label">
+              <input type="radio" name="seguro" value="no" [(ngModel)]="seguroDesgravamen" (change)="recalcularSimulacion()"> No
+            </label>
           </div>
         </div>
       </div>
-    </section>
 
-    <div class="operaciones-container">
-  <h3>Operaciones Disponibles</h3>
-  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-    
-    <button class="btn-operacion">💸 Transferencias</button>
-    <button class="btn-operacion">📄 Ver Estado de Cuenta</button>
-    <button class="btn-operacion">📅 Cronograma de Pagos</button>
-    
-    <button routerLink="/solicitar-credito" 
-            style="background: #0056b3; color: white; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-      🚀 Solicitar Crédito
-    </button>
+      <div class="results-panel">
+        <div>
+          <div class="main-fee-box">
+            <div class="fee-title">Cuota Mensual Calculada:</div>
+            <div class="fee-value">S/. {{ cuotaMensual | number:'1.2-2' }}</div>
+          </div>
 
+          <div class="data-row">
+            <span class="label">TCEA estimada:</span>
+            <strong>{{ tceaEstimada || '0.00' }}%</strong>
+          </div>
+          <div class="data-row">
+            <span class="label">Total de Intereses:</span>
+            <span>S/. {{ totalIntereses | number:'1.2-2' }}</span>
+          </div>
+          <div class="data-row">
+            <span class="label">Total de Seguros:</span>
+            <span>S/. {{ totalSeguros | number:'1.2-2' }}</span>
+          </div>
+          <div class="data-row total-row">
+            <span class="label">Monto Total a Pagar:</span>
+            <span>S/. {{ montoTotalPagar | number:'1.2-2' }}</span>
+          </div>
+        </div>
+
+        <button class="btn-action-primary" (click)="solicitarCredito()">
+          Solicitar este Crédito en Línea ⚡
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bottom-operations-bar">
+    <button class="btn-secondary-op" (click)="verTransferencias()">💸 Transferencias</button>
+    <button class="btn-secondary-op" (click)="verEstadoCuenta()">📄 Ver Estado de Cuenta</button>
+    <button class="btn-secondary-op" (click)="verCronograma()">🗓️ Cronograma de Pagos</button>
+  </footer>
+</div>
+
+<div class="modal-overlay" *ngIf="modalTransferencia">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>💸 Transferencia Rápida</h3>
+      <button class="close-x" (click)="cerrarModales()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Transfiere desde tu Cuenta Ahorro Negocio al instante.</p>
+      
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label class="form-main-label">Cuenta Destino (CCI o Interna)</label>
+        <input type="text" class="input-control" [(ngModel)]="cuentaDestino" placeholder="Ej. 002-45000...">
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label class="form-main-label">Monto a Transferir (S/.)</label>
+        <input type="number" class="input-control" [(ngModel)]="montoTransferir" placeholder="0.00">
+      </div>
+      
+      <button class="btn-action-primary" (click)="ejecutarTransferencia()">Confirmar Transferencia 🚀</button>
+    </div>
   </div>
 </div>
-  </main>
+
+<div class="modal-overlay" *ngIf="modalEstadoCuenta">
+  <div class="modal-card" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3>📄 Estado de Situación Financiera</h3>
+      <button class="close-x" (click)="cerrarModales()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="pdf-preview-box">
+        <h4 style="text-align: center; color: #003366; margin-bottom: 15px;">ProEmpresa - Reporte Consolidado</h4>
+        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 6px 0;"><strong>Activo (Disponibilidades):</strong></td><td style="text-align: right;">S/. {{ (cliente?.saldoAhorros || 15450) | number:'1.2-2' }}</td></tr>
+          <tr style="border-bottom: 1px solid #eee;"><td style="padding: 6px 0; color: red;"><strong>Pasivo (Créditos vigentes):</strong></td><td style="text-align: right; color: red;">S/. {{ (cliente?.creditoPendiente || 8200) | number:'1.2-2' }}</td></tr>
+          <tr style="border-bottom: 2px solid #003366;"><td style="padding: 10px 0;"><strong>Patrimonio Neto Estimado:</strong></td><td style="text-align: right;"><strong>S/. {{ ((cliente?.saldoAhorros || 15450) - (cliente?.creditoPendiente || 8200)) | number:'1.2-2' }}</strong></td></tr>
+        </table>
+      </div>
+      <p style="text-align: center; margin-top: 15px;">
+        <button class="btn-secondary-op" (click)="cerrarModales()" style="width: 100%;">Descargar en PDF 📥</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="modalCronograma">
+  <div class="modal-card" style="max-width: 550px;">
+    <div class="modal-header">
+      <h3>🗓️ Proyección de Cronograma de Pagos</h3>
+      <button class="close-x" (click)="cerrarModales()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13px; margin-bottom: 10px;">Plan estimado para un capital de <strong>S/. {{ montoSolicitado }}</strong> en <strong>{{ numCuotas }} cuotas</strong>:</p>
+      
+      <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
+        <table style="width: 100%; font-size: 12px; border-collapse: collapse; text-align: left;">
+          <thead style="background: #f4f6f9; position: sticky; top: 0;">
+            <tr>
+              <th style="padding: 8px;">N°</th>
+              <th style="padding: 8px;">Monto Cuota</th>
+              <th style="padding: 8px;">Seguro</th>
+              <th style="padding: 8px;">Vencimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #eee;">
+              <td style="padding: 8px;">1</td>
+              <td style="padding: 8px;">S/. {{ cuotaMensual | number:'1.2-2' }}</td>
+              <td style="padding: 8px;">S/. {{ (totalSeguros / (numCuotas || 1)) | number:'1.2-2' }}</td>
+              <td style="padding: 8px;">17/07/2026</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;" *ngIf="(numCuotas || 0) >= 2">
+              <td style="padding: 8px;">2</td>
+              <td style="padding: 8px;">S/. {{ cuotaMensual | number:'1.2-2' }}</td>
+              <td style="padding: 8px;">S/. {{ (totalSeguros / (numCuotas || 1)) | number:'1.2-2' }}</td>
+              <td style="padding: 8px;">17/08/2026</td>
+            </tr>
+            <tr *ngIf="(numCuotas || 0) > 2">
+              <td style="padding: 8px; color: #888;" colspan="4">...Siguientes cuotas mensuales hasta cumplir las {{ numCuotas }} pactadas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div style="background: #fff9e6; padding: 10px; border-radius: 6px; font-size: 11px; margin-top: 10px; border-left: 4px solid #ffcc00; color: #665200;">
+        * Las fechas son calculadas automáticamente tomando como base el día de desembolso seleccionado.
+      </div>
+    </div>
+  </div>
 </div>

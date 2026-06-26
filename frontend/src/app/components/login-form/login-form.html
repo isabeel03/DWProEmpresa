@@ -1,44 +1,82 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2>Ingreso Seguro</h2>
-    <p class="subtitle">Banca por Internet de Pro<span class="accent">Empresa</span></p>
-
-    <div class="alert alert-error" *ngIf="errorMessage">
-      🛑 {{ errorMessage }}
+<div class="login-wrapper">
+  <div class="login-container">
+    
+    <div class="brand-header">
+      <h2 class="main-title">ProEmpresa</h2>
+      <p class="subtitle">Portal Interno - Core Bancario</p>
     </div>
 
-    <div class="alert alert-success" *ngIf="successMessage">
-      ✅ {{ successMessage }}
+    <div class="tabs-container">
+      <button 
+        type="button" 
+        class="tab-button" 
+        [class.active]="!esAdmin" 
+        (click)="cambiarModo(false)">
+        Clientes
+      </button>
+      <button 
+        type="button" 
+        class="tab-button" 
+        [class.active]="esAdmin" 
+        (click)="cambiarModo(true)">
+        Personal Core
+      </button>
     </div>
 
-    <form (ngSubmit)="onLoginSubmit()">
-      <div class="form-group">
-        <label for="email">Correo Electrónico</label>
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="onLoginSubmit()" #loginForm="ngForm">
+      
+      <div *ngIf="!esAdmin" class="input-group">
+        <label for="username">Código de Cliente o Correo</label>
         <input 
-          type="email" 
-          id="email" 
-          name="email" 
+          type="text" 
+          id="username"
           [(ngModel)]="emailInput" 
-          placeholder="ejemplo@correo.com" 
+          name="emailInput" 
+          placeholder="Ej: cli000007 o correo"
           required>
       </div>
 
-      <div class="form-group">
-        <label for="password">Contraseña de Banca</label>
+      <div *ngIf="esAdmin" class="input-group">
+        <label for="dni">DNI Institucional</label>
+        <input 
+          type="text" 
+          id="dni"
+          [(ngModel)]="dniInput" 
+          name="dniInput" 
+          placeholder="Ingrese su DNI"
+          maxlength="8"
+          required>
+      </div>
+
+      <div class="input-group">
+        <div class="label-row">
+          <label for="password">Contraseña de Acceso</label>
+          <span *ngIf="esAdmin" class="hint-tag">Clave = DNI</span>
+        </div>
         <input 
           type="password" 
-          id="password" 
-          name="password" 
+          id="password"
           [(ngModel)]="passwordInput" 
-          placeholder="••••••••" 
+          name="passwordInput" 
+          placeholder="••••••••"
           required>
       </div>
 
-      <button type="submit" class="btn-submit" [disabled]="loading">
-        {{ loading ? 'Verificando...' : 'Iniciar Sesión' }}
+      <button 
+        type="submit" 
+        class="btn-submit" 
+        [disabled]="loading || !loginForm.form.valid">
+        {{ loading ? 'Verificando datos...' : 'Ingresar a mi Cuenta' }}
       </button>
-    </form>
 
-    <a routerLink="/banca-por-internet" class="btn-back">Regresar a la zona segura</a>
+    </form>
   </div>
 </div>

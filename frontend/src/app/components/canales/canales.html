@@ -1,1 +1,66 @@
-<p>canales works!</p>
+<div class="canales-container">
+  
+  <header class="canales-header">
+    <h2>Nuestros Canales de Atención</h2>
+    <p class="subtitle">Elige la opción que mejor se acomode a tus tiempos. Realiza tus operaciones sin complicaciones.</p>
+  </header>
+
+  <div class="canales-grid">
+    
+    <div class="canal-card card-yale">
+      <div class="card-icon">📱</div>
+      <h3>Canales Alternativos</h3>
+      <p>Ahorra tiempo y realiza tus pagos, consultas y transferencias desde la comodidad de tu hogar o negocio.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleCanal('alternativos')">
+          {{ canalAbierto === 'alternativos' ? 'Ocultar Opciones' : 'Ver Canales Digitales' }}
+        </button>
+        
+        <div class="desplegable-content" *ngIf="canalAbierto === 'alternativos'">
+          <div class="option-item">
+            <strong>🌐 Banca por Internet</strong>
+            <p>Transfiere entre tus cuentas y paga tus cuotas las 24 horas.</p>
+          </div>
+          <div class="option-item">
+            <strong>🤝 Red de Agentes Aliados</strong>
+            <p>Realiza depósitos y retiros en bodegas y farmacias autorizadas (Kasnet, Western Union).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canal-card card-airforce">
+      <div class="card-icon">📍</div>
+      <h3>Encuéntranos</h3>
+      <p>Ubica nuestra red de agencias y oficinas especiales a nivel nacional para recibir asesoría personalizada.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleCanal('encuentranos')">
+          {{ canalAbierto === 'encuentranos' ? 'Ocultar Buscador' : 'Buscar Agencia Cercana' }}
+        </button>
+        
+        <div class="desplegable-content" *ngIf="canalAbierto === 'encuentranos'">
+          <div class="search-box">
+            <select class="min-select" [(ngModel)]="regionSeleccionada" (change)="filtrarAgencias()">
+              <option value="">Seleccione una Región</option>
+              <option value="lima">Lima</option>
+              <option value="junin">Junín</option>
+              <option value="ica">Ica</option>
+            </select>
+          </div>
+
+          <div class="agencias-list" *ngIf="agenciasFiltradas.length > 0">
+            <div class="agencia-item" *ngFor="let ag of agenciasFiltradas">
+              <strong>{{ ag.nombre }}</strong>
+              <span>📍 {{ ag.direccion }}</span>
+              <small>🕒 Horario: {{ ag.horario }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

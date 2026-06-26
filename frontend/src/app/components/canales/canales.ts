@@ -1,30 +1,48 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // <-- ¡Importante!
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+interface Agencia {
+  region: string;
+  nombre: string;
+  direccion: string;
+  horario: string;
+}
 
 @Component({
   selector: 'app-canales',
   standalone: true,
-  imports: [RouterModule], // <-- ¡Añadido aquí!
-  template: `
-    <div class="page-container">
-      <h1 class="page-title">Nuestros Canales de Atención</h1>
-      <p class="page-subtitle">Estamos siempre cerca de ti para que realices tus operaciones sin perder tiempo.</p>
-      
-      <div class="grid-3">
-        <div class="info-card" style="border-top-color: var(--proempresa-orange)">
-          <h2>📍 Red de Agencias</h2>
-          <p>Visítanos en nuestras oficinas a nivel nacional para recibir asesoría personalizada de un funcionario de créditos.</p>
-        </div>
-        <div class="info-card">
-          <h2>🏪 Agentes ProEmpresa</h2>
-          <p>Realiza retiros, depósitos y pago de cuotas en las bodegas y comercios afiliados más cercanos a tu negocio.</p>
-        </div>
-        <div class="info-card" style="border-top-color: var(--proempresa-orange)">
-          <h2>💻 Banca Digital</h2>
-          <p>Consulta tus saldos, estados de cuenta y cronogramas de pago las 24 horas del día sin salir de tu local.</p>
-        </div>
-      </div>
-    </div>
-  `
-})
-export class CanalesComponent {}
+  imports: [CommonModule, FormsModule],
+  templateUrl: './canales.html',
+  styleUrl: './canales.css'
+  })
+export class CanalesComponent {
+  canalAbierto: string | null = null;
+  regionSeleccionada: string = '';
+  agenciasFiltradas: Agencia[] = [];
+
+  private listaAgencias: Agencia[] = [
+    { region: 'lima', nombre: 'Agencia Principal Lima', direccion: 'Av. Paseo de la República 3211, San Isidro', horario: 'Lun-Vie 9am a 6pm | Sáb 9am a 1pm' },
+    { region: 'lima', nombre: 'Oficina Los Olivos', direccion: 'Av. Carlos Izaguirre 743', horario: 'Lun-Vie 9am a 6pm' },
+    { region: 'junin', nombre: 'Agencia Huancayo', direccion: 'Calle Real 455, Huancayo', horario: 'Lun-Vie 9am a 6pm | Sáb 9am a 1pm' },
+    { region: 'ica', nombre: 'Agencia Ica', direccion: 'Av. J.J. Elías 142', horario: 'Lun-Vie 9am a 6pm' }
+  ];
+
+  toggleCanal(canal: string) {
+    this.canalAbierto = this.canalAbierto === canal ? null : canal;
+    if (canal === 'encuentranos') {
+      this.regionSeleccionada = '';
+      this.agenciasFiltradas = [];
+    }
+  }
+
+  filtrarAgencias() {
+    if (!this.regionSeleccionada) {
+      this.agenciasFiltradas = [];
+      return;
+    }
+    this.agenciasFiltradas = this.listaAgencias.filter(
+      ag => ag.region === this.regionSeleccionada
+    );
+  }
+}

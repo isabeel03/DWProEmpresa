@@ -1,1 +1,102 @@
-<p>servicios works!</p>
+<div class="servicios-container">
+  
+  <header class="servicios-header">
+    <h2>Servicios Financieros Integrales</h2>
+    <p class="subtitle">Operaciones rápidas y coberturas a tu medida con total seguridad.</p>
+  </header>
+
+  <div class="tabs-container">
+    <button class="tab-btn" [class.active]="servicioActivo === 'cambio'" (click)="setServicio('cambio')">💵 Tipo de cambio</button>
+    <button class="tab-btn" [class.active]="servicioActivo === 'recaudacion'" (click)="setServicio('recaudacion')">🏛️ Recaudación</button>
+    <button class="tab-btn" [class.active]="servicioActivo === 'remesas'" (click)="setServicio('remesas')">📱 Remesas</button>
+    <button class="tab-btn" [class.active]="servicioActivo === 'seguros'" (click)="setServicio('seguros')">🛡️ Seguros</button>
+  </div>
+
+  <div class="servicio-panel" *ngIf="servicioActivo === 'cambio'">
+    <div class="panel-grid">
+      <div class="info-side">
+        <h3>Cambio de Divisas en Línea</h3>
+        <p>Accede a la tasa preferencial del día para asegurar tus transacciones comerciales en dólares sin salir de tu negocio.</p>
+        <div class="tasas-box">
+          <div class="tasa-item"><span>Compra:</span> <strong>S/ {{ tasaCompra }}</strong></div>
+          <div class="tasa-item"><span>Venta:</span> <strong>S/ {{ tasaVenta }}</strong></div>
+        </div>
+      </div>
+      <div class="interactive-side calculator-box">
+        <h4>Calculadora de Divisas</h4>
+        <div class="form-group">
+          <label class="input-label">Tengo (Soles o Dólares)</label>
+          <input type="number" [(ngModel)]="montoOrigen" (input)="calcularCambio()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="input-label">Operación</label>
+          <select [(ngModel)]="tipoOperacion" (change)="calcularCambio()" class="form-select">
+            <option value="comprar">Quiero Comprar Dólares</option>
+            <option value="vender">Quiero Vender Dólares</option>
+          </select>
+        </div>
+        <div class="result-display">
+          <span>Monto Estimado a Recibir:</span>
+          <h5>{{ simboloDestino }} {{ montoDestino | number:'1.2-2' }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="servicio-panel" *ngIf="servicioActivo === 'recaudacion'">
+    <div class="panel-grid">
+      <div class="info-side">
+        <h3>Soluciones de Recaudación Empresarial</h3>
+        <p>Facilita que tus clientes paguen sus obligaciones, pensiones o facturas directamente a través de nuestra red de canales autorizados.</p>
+      </div>
+      <div class="interactive-side">
+        <h4>Convenios Habilitados</h4>
+        <ul class="convenios-list">
+          <li><strong>Pago de Servicios Públicos:</strong> Luz, Agua, Telefonía.</li>
+          <li><strong>Instituciones Educativas:</strong> Colegios y Academias aliadas.</li>
+          <li><strong>Recaudación Municipal:</strong> Pago de tributos y arbitrios locales.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="servicio-panel" *ngIf="servicioActivo === 'remesas'">
+    <div class="panel-grid">
+      <div class="info-side">
+        <h3>Envío y Recepción de Dinero</h3>
+        <p>Cobrar tus giros nacionales o remesas internacionales procedentes del extranjero de forma inmediata y segura en ventanilla.</p>
+      </div>
+      <div class="interactive-side">
+        <h4>Empresas de Envío Vinculadas</h4>
+        <div class="remesas-grid">
+          <div class="remesa-card">✨ Western Union</div>
+          <div class="remesa-card">⚡ MoneyGram</div>
+          <div class="remesa-card">🌐 Giros Nacionales ProEmpresa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="servicio-panel" *ngIf="servicioActivo === 'seguros'">
+    <div class="panel-grid">
+      <div class="info-side">
+        <h3>Microseguros y Protección Familiar</h3>
+        <p>Resguarda tu patrimonio comercial o la salud de tus seres queridos ante cualquier imprevisto con primas mensuales sumamente accesibles.</p>
+      </div>
+      <div class="interactive-side protection-box">
+        <h4>Seguros Disponibles en Ventanilla</h4>
+        <div class="seguros-list">
+          <div class="seguro-item-row">
+            <span>🛡️ Seguro Protección Negocio</span>
+            <small>Cubre mercadería ante robos o incendios</small>
+          </div>
+          <div class="seguro-item-row">
+            <span>❤️ Seguro de Vida Familiar</span>
+            <small>Respaldo económico directo para tus beneficiarios</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,43 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-simulador',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './simulador.html' // <-- ¡Ahora apunta al archivo HTML independiente!
+  imports: [CommonModule, FormsModule],
+  templateUrl: './simulador.html',
+  styleUrls: ['./simulador.css']
 })
-export class SimuladorComponent {
-  monto: number = 5000;
-  selectedCuotas: number = 12;
-  tipoCredito: string = 'capital';
-  tasaInteres: number = 0.28; 
+export class SimuladorComponent implements OnInit {
+  
+  // Variables del Formulario
+  tipo_credito: string = 'Personas';
+  producto: string = 'consumo_directo';
+  moneda: string = 'Soles';
+  monto: number = 7000;
+  plazo: number = 5;
+  fecha_desembolso: string = '2026-06-17';
+  
+  // 💡 TUS 4 VALORES ESPECÍFICOS DE TEA
+  tasasDisponibles: number[] = [15.50, 28.00, 45.00, 71.76];
+  tea: number = 71.76; // Tasa inicial por defecto
 
+  // Variables de Seguros
+  tiene_desgravamen: string = 'si';
+  tipo_desgravamen: string = 'básico';
+  tiene_optativo: string = 'no';
+
+  // Resultados
   cuotaEstimada: number = 0;
+  tceaCalculada: number = 73.66;
   totalIntereses: number = 0;
-  simulacionCalculada: boolean = false;
+  totalSeguros: number = 0;
+  totalAPagar: number = 0;
 
-  plazosDisponibles: number[] = [6, 12, 18, 24, 36];
-
-  constructor() {
-    this.calcularCuota(); 
+  ngOnInit() {
+    this.calcularCuota();
   }
 
-  actualizarTasa() {
-    this.tasaInteres = this.tipoCredito === 'capital' ? 0.28 : 0.24;
+  actualizarProducto() {
+    if (this.tipo_credito === 'Negocios') {
+      this.producto = 'capital_trabajo';
+    } else {
+      this.producto = 'consumo_directo';
+    }
     this.calcularCuota();
   }
 
   calcularCuota() {
-    if (this.monto < 1000 || this.monto > 50000) {
-      alert("Por favor ingrese un monto válido entre S/. 1,000 y S/. 50,000");
+    if (!this.monto || !this.plazo || this.plazo <= 0) {
+      this.cuotaEstimada = 0;
+      this.totalIntereses = 0;
+      this.totalSeguros = 0;
+      this.totalAPagar = 0;
       return;
     }
-    const interstateMensual = Math.pow(1 + this.tasaInteres, 1 / 12) - 1;
-    this.cuotaEstimada = (this.monto * interstateMensual) / (1 - Math.pow(1 + interstateMensual, -this.selectedCuotas));
-    this.totalIntereses = (this.cuotaEstimada * this.selectedCuotas) - this.monto;
-    this.simulacionCalculada = true;
+
+    // Usar dinámicamente la TEA seleccionada por el usuario
+    this.tceaCalculada = this.tea + 1.90; // Cálculo referencial de TCEA
+    const tasaMensual = Math.pow(1 + (this.tea / 100), 1 / 12) - 1;
+    const factor = (tasaMensual * Math.pow(1 + tasaMensual, this.plazo)) / 
+                   (Math.pow(1 + tasaMensual, this.plazo) - 1);
+    
+    let cuotaBase = this.monto * factor;
+
+    let costoDesgravamenMensual = 0;
+    if (this.tiene_desgravamen === 'si') {
+      costoDesgravamenMensual = this.monto * 0.00095;
+    }
+
+    let costoOptativoMensual = (this.tiene_optativo === 'si') ? 15.00 : 0;
+
+    this.cuotaEstimada = cuotaBase + costoDesgravamenMensual + costoOptativoMensual;
+    this.totalAPagar = this.cuotaEstimada * this.plazo;
+    this.totalSeguros = (costoDesgravamenMensual + costoOptativoMensual) * this.plazo;
+    this.totalIntereses = this.totalAPagar - this.monto - this.totalSeguros;
+  }
+
+  abrirModalContacto() {
+    alert(`Simulación Procesada.\nMonto: S/. ${this.monto}\nTEA: ${this.tea}%\nCuota: S/. ${this.cuotaEstimada.toFixed(2)}`);
   }
 }

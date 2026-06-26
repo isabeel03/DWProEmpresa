@@ -1,1 +1,94 @@
-<p>contacto works!</p>
+<div class="ayuda-container">
+  
+  <header class="ayuda-header">
+    <h2>Centro de Ayuda y Contacto</h2>
+    <p class="subtitle">Estamos aquí para resolver tus dudas y atender tus solicitudes con total transparencia.</p>
+  </header>
+
+  <div class="ayuda-grid">
+    
+    <div class="ayuda-card card-yale">
+      <div class="card-icon">📖</div>
+      <h3>Libro de Reclamaciones</h3>
+      <p>Conforme a lo establecido, ponemos a tu disposición nuestra plataforma para ingresar reclamos o quejas.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleSeccion('reclamos')">
+          {{ seccionAbierta === 'reclamos' ? 'Cerrar Formulario' : 'Registrar Reclamo' }}
+        </button>
+        
+        <div class="interactive-form" *ngIf="seccionAbierta === 'reclamos'">
+          <input type="text" placeholder="DNI / CE" class="min-input">
+          <textarea placeholder="Detalle brevemente su reclamo o queja..." class="min-textarea"></textarea>
+          <button class="btn-submit" (click)="enviarSimulado()">Enviar Hoja de Reclamación</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ayuda-card card-airforce">
+      <div class="card-icon">🔗</div>
+      <h3>Enlaces de tu Interés</h3>
+      <p>Accede de forma rápida a los portales oficiales de transparencia, regulación financiera y de protección al consumidor.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleSeccion('enlaces')">
+          {{ seccionAbierta === 'enlaces' ? 'Ocultar Enlaces' : 'Ver Enlaces Clave' }}
+        </button>
+        
+        <ul class="enlaces-list" *ngIf="seccionAbierta === 'enlaces'">
+          <li><a href="https://www.sbs.gob.pe" target="_blank">Portal SBS</a></li>
+          <li><a href="https://www.indecopi.gob.pe" target="_blank">Mira a quién le compras - INDECOPI</a></li>
+          <li><a href="#" target="_blank">Tasas de Interés y Comisiones</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ayuda-card card-cambridge">
+      <div class="card-icon">🏠</div>
+      <h3>Venta de Adjudicados</h3>
+      <p>Consulta el catálogo vigente de bienes inmuebles, terrenos y vehículos disponibles a precios competitivos.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleSeccion('adjudicados')">
+          {{ seccionAbierta === 'adjudicados' ? 'Ocultar Catálogo' : 'Ver Bienes Disponibles' }}
+        </button>
+        
+        <div class="bienes-container" *ngIf="seccionAbierta === 'adjudicados'">
+          <div class="bien-item">
+            <strong>Inmueble Comercial - Lima</strong>
+            <span>Precio base: S/ 145,000</span>
+          </div>
+          <div class="bien-item">
+            <strong>Vehículo Pick-up 2022</strong>
+            <span>Precio base: $ 12,500</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ayuda-card card-mindaro">
+      <div class="card-icon">🚨</div>
+      <h3>Canal de Denuncias</h3>
+      <p>Reporta de forma totalmente anónima y segura cualquier acto de fraude, corrupción o conducta inética.</p>
+      
+      <div class="card-action-box">
+        <button class="btn-action" (click)="toggleSeccion('denuncias')">
+          {{ seccionAbierta === 'denuncias' ? 'Cerrar Canal' : 'Iniciar Reporte Anónimo' }}
+        </button>
+        
+        <div class="interactive-form" *ngIf="seccionAbierta === 'denuncias'">
+          <div class="alert-box">Su IP y datos personales no serán registrados.</div>
+          <select class="min-select">
+            <option value="">Seleccione tipo de incidencia</option>
+            <option value="fraude">Intento de Fraude</option>
+            <option value="soborno">Soborno o Corrupción</option>
+          </select>
+          <textarea placeholder="Describa los hechos detalladamente..." class="min-textarea"></textarea>
+          <button class="btn-submit btn-danger" (click)="enviarSimulado()">Enviar Alerta Anónima</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

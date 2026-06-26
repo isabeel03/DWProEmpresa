@@ -1,0 +1,148 @@
+/* ==========================================================================
+   REDISEÑO HEADER INSTITUCIONAL - PROEMPRESA
+   ========================================================================== */
+
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* 1. Barra Verde de Segmentos Superior */
+.top-segment-bar {
+  background-color: #238944; /* Verde institucional base */
+  padding: 8px 4%;
+}
+.segment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 15px;
+}
+.segment-link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 8px;
+  transition: color 0.2s;
+}
+.segment-link:hover {
+  color: #ffffff;
+}
+.segment-link.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+/* 2. Contenedor de Navbar */
+.navbar {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 4%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid rgba(77, 124, 138, 0.1);
+}
+
+/* Área del Logo */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.brand-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.entity-type {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7F9C96; /* Cambridge Blue */
+  font-weight: 600;
+}
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1B4079; /* Yale Blue */
+}
+.logo-text .accent {
+  color: #238944;
+}
+.logo-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Enlaces de Navegación */
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: #238944;
+}
+.nav-links a .arrow {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Link Activo */
+.active-link {
+  color: #238944 !important;
+  font-weight: 600 !important;
+}
+
+/* 3. Botón de Banca por Internet (Píldora Verde Brillante) */
+.btn-banca {
+  background-color: #2b1b63; /* Verde oficial de la Banca */
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(10, 23, 17, 0.2);
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-banca:hover {
+  background-color: #0f0e43;
+  transform: translateY(-1px);
+}
+.btn-banca:active {
+  transform: translateY(0);
+}
+
+/* Estructura Básica */
+.content-body {
+  flex: 1;
+}
+.main-footer {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: #4968da;
+  border-top: 1px solid rgba(77, 124, 138, 0.1);
+}

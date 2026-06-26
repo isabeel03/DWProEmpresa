@@ -1,0 +1,148 @@
+/* ==========================================================================
+   ESTILOS COMPONENTE SERVICIOS - PALETA CORPORATIVA LIMPIA
+   ========================================================================== */
+
+.servicios-container {
+  padding: 40px 4%;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+/* Cabecera */
+.servicios-header h2 {
+  color: #1B4079; /* Yale Blue */
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+.servicios-header .subtitle {
+  color: #4D7C8A; /* Air Force Blue */
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Menú de Pestañas */
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid rgba(77, 124, 138, 0.1);
+  padding-bottom: 14px;
+  margin: 30px 0;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid rgba(77, 124, 138, 0.25);
+  color: #4D7C8A;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: #1B4079;
+  color: #ffffff;
+  border-color: #1B4079;
+}
+
+/* Panel de Contenido */
+.servicio-panel {
+  background: #ffffff;
+  border: 1px solid rgba(127, 156, 150, 0.2);
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(27, 64, 121, 0.02);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 35px;
+  align-items: center;
+}
+
+.info-side h3 {
+  color: #1B4079;
+  font-size: 22px;
+  margin: 0 0 12px 0;
+}
+
+.info-side p {
+  color: #4D7C8A;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+/* Pizarra de Tasas */
+.tasas-box {
+  display: flex;
+  gap: 20px;
+}
+.tasa-item {
+  background: rgba(127, 156, 150, 0.08);
+  border: 1px solid rgba(127, 156, 150, 0.2);
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.tasa-item span { color: #4D7C8A; }
+.tasa-item strong { color: #1B4079; font-size: 16px; margin-left: 5px; }
+
+/* Caja de Interactividad Derecha */
+.interactive-side {
+  background: rgba(77, 124, 138, 0.03);
+  border-left: 4px solid #7F9C96; /* Detalle Cambridge Blue */
+  padding: 24px;
+  border-radius: 0 6px 6px 0;
+}
+.interactive-side h4 {
+  color: #1B4079;
+  margin: 0 0 16px 0;
+  font-size: 16px;
+}
+
+/* Formulario Interno */
+.form-group { margin-bottom: 14px; }
+.input-label { display: block; font-size: 12.5px; font-weight: 600; color: #1B4079; margin-bottom: 4px; }
+.form-input, .form-select {
+  width: 100%; padding: 9px 12px; border: 1px solid rgba(77, 124, 138, 0.3); border-radius: 6px; font-size: 14px; color: #1B4079; box-sizing: border-box;
+}
+
+/* Pantalla de Resultados de Operación */
+.result-display {
+  background: rgba(203, 223, 144, 0.15); /* Acento Mindaro sutil */
+  border: 1px solid rgba(127, 156, 150, 0.2);
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 15px;
+}
+.result-display span { font-size: 12px; color: #4D7C8A; }
+.result-display h5 { font-size: 22px; color: #1B4079; margin: 4px 0 0 0; font-weight: 700; }
+
+/* Listas y Miscelánea */
+.convenios-list, .seguros-list { list-style: none; padding: 0; margin: 0; }
+.convenios-list li { padding: 8px 0; border-bottom: 1px solid rgba(77, 124, 138, 0.1); color: #4D7C8A; font-size: 14px; }
+.remesas-grid { display: flex; flex-direction: column; gap: 10px; }
+.remesa-card { background: #ffffff; border: 1px solid rgba(77, 124, 138, 0.15); padding: 12px; border-radius: 6px; color: #1B4079; font-weight: 600; font-size: 14px; }
+
+.seguro-item-row {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(77, 124, 138, 0.1);
+}
+.seguro-item-row span { font-weight: 600; color: #1B4079; font-size: 14px; }
+.seguro-item-row small { color: #4D7C8A; font-size: 12px; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .panel-grid { grid-template-columns: 1fr; gap: 20px; }
+}

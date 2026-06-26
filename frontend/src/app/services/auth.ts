@@ -1,51 +1,94 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root' // <-- Esto le dice a Angular que se puede inyectar en cualquier componente
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000'; 
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://127.0.0.1:8000/api';
+  private isBrowser: boolean;
 
-login(email: string, password: string): Observable<any> {
-  // 1. Añadimos '/auth' para corregir el error 404
-  return this.http.post(`${this.apiUrl}/auth/login`, { email, password }).pipe(
-    tap((res: any) => {
-      // 2. Ajustamos las propiedades según lo que devuelve nuestro nuevo backend de FastAPI
-      if (res && res.access_token) {
-        // Guardamos el token JWT exigido por la rúbrica (Criterio 3)
-        localStorage.setItem('bank_token', res.access_token);
-        
-        // Guardamos el tipo de usuario para que sirva de control en los guardianes de rutas
-        localStorage.setItem('tipo_usuario', res.tipo_usuario);
-      }
-    })
-  );
-}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
+  // 🚀 LOGIN PARA CLIENTES (Homebanking)
+  login(emailOrCode: string, password: string): Observable<any> {
+    const payload = { 
+      username_or_email: emailOrCode,
+      password: password 
+    };
+    
+    return this.http.post(`${this.apiUrl}/auth/login`, payload).pipe(
+      tap((res: any) => {
+        if (res && res.access_token && this.isBrowser) {
+          localStorage.setItem('bank_token', res.access_token);
+          localStorage.setItem('tipo_usuario', 'cliente');
+          localStorage.setItem('cliente_session', JSON.stringify(res));
+        }
+      })
+    );
+  }
 
+ 
+  // 🚀 LOGIN EXCLUSIVO PARA ADMINISTRADORES Y PERSONAL CORE
+  loginAdmin(dni: string, password: string): Observable<any> {
+    const payload = { 
+      dni: dni,
+      password: password 
+    };
+  
+
+    return this.http.post(this.apiUrl + '/auth/login-admin', payload).pipe(
+      tap((res: any) => {
+        if (res && res.access_token) {
+          localStorage.setItem('bank_token', res.access_token);
+          localStorage.setItem('tipo_usuario', 'empleado');
+          localStorage.setItem('empleado_session', JSON.stringify(res));
+        }
+      })
+    );
+  }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('bank_token');
+    return this.isBrowser ? !!localStorage.getItem('bank_token') : false;
   }
 
-getUserEmail() {
-  // 1. Validamos de forma segura si estamos corriendo en el navegador del cliente
-  if (isPlatformBrowser(inject(PLATFORM_ID))) {
-    return localStorage.getItem('tu_clave_aqui'); // 👈 Tu línea 34 original protegida
+  getTipoUsuario(): string | null {
+    return this.isBrowser ? localStorage.getItem('tipo_usuario') : null;
   }
-  return null; // Si está en el servidor, no lee nada aún y no se rompe
-}
+
+  getUserEmail(): string {
+    if (!this.isBrowser) return 'Usuario Bancario';
+
+    const clienteData = localStorage.getItem('cliente_session');
+    if (clienteData) {
+      try {
+        const session = JSON.parse(clienteData);
+        return session.perfil?.nombre || 'Cliente ProEmpresa';
+      } catch (e) { return 'Cliente ProEmpresa'; }
+    }
+    
+    const empleadoData = localStorage.getItem('empleado_session');
+    if (empleadoData) {
+      try {
+        const session = JSON.parse(empleadoData);
+        return session.perfil?.nombre || 'Administrador Core';
+      } catch (e) { return 'Administrador Core'; }
+    }
+
+    return 'Usuario Bancario';
+  }
 
   logout() {
-    localStorage.removeItem('bank_token');
-    localStorage.removeItem('user_email');
+    if (this.isBrowser) {
+      localStorage.clear();
+    }
   }
-
-  
 }

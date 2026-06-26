@@ -1,0 +1,161 @@
+/* ==========================================================================
+   ESTILOS CENTRO DE AYUDA - PALETA OFICIAL
+   ========================================================================== */
+
+.ayuda-container {
+  padding: 40px 4%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.ayuda-header {
+  margin-bottom: 40px;
+}
+.ayuda-header h2 {
+  color: #1B4079; /* Yale Blue */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+.ayuda-header .subtitle {
+  color: #4D7C8A; /* Air Force Blue */
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Grilla de Tarjetas */
+.ayuda-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+/* Tarjeta Base */
+.ayuda-card {
+  background: #ffffff;
+  border: 1px solid rgba(77, 124, 138, 0.15);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(27, 64, 121, 0.02);
+  transition: transform 0.2s ease;
+}
+.ayuda-card:hover {
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 14px;
+}
+
+.ayuda-card h3 {
+  color: #1B4079;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.ayuda-card p {
+  color: #4D7C8A;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  min-height: 63px; /* Alineación uniforme */
+}
+
+/* Bordes superiores usando tus variantes exactas de color */
+.card-yale { border-top: 4px solid #1B4079; }
+.card-airforce { border-top: 4px solid #4D7C8A; }
+.card-cambridge { border-top: 4px solid #7F9C96; }
+.card-mindaro { border-top: 4px solid #CBDF90; }
+
+/* Cajas de acción interna */
+.card-action-box {
+  border-top: 1px solid rgba(77, 124, 138, 0.1);
+  padding-top: 14px;
+}
+
+.btn-action {
+  width: 100%;
+  background: rgba(77, 124, 138, 0.08);
+  color: #1B4079;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-action:hover {
+  background: rgba(77, 124, 138, 0.15);
+}
+
+/* Formularios Interactivos Desplegables */
+.interactive-form {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.min-input, .min-textarea, .min-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgba(77, 124, 138, 0.3);
+  border-radius: 4px;
+  font-size: 13px;
+  color: #1B4079;
+  box-sizing: border-box;
+}
+
+.min-textarea {
+  resize: vertical;
+  height: 60px;
+}
+
+.btn-submit {
+  background-color: #1B4079;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-submit:hover {
+  background-color: #14305c;
+}
+
+.btn-danger {
+  background-color: #4D7C8A; /* Mantenemos sobrio dentro de la paleta */
+}
+
+/* Listas y Sub-bienes */
+.enlaces-list {
+  padding-left: 18px;
+  margin: 12px 0 0 0;
+}
+.enlaces-list li {
+  margin-bottom: 6px;
+}
+.enlaces-list a {
+  color: #4D7C8A;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+.enlaces-list a:hover {
+  text-decoration: underline;
+  color: #1B4079;
+}
+
+.bienes-container {
+  margin-top: 12px;
+}
+.bien-item {
+  background: rgba(127, 156, 150, 0.05);
+  padding: 8px;
+  border-left: 3px solid #7F9

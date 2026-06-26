@@ -1,1 +1,76 @@
-<p>productos works!</p>
+<div class="productos-container">
+  
+  <header class="productos-header">
+    <h2>Nuestros Productos Financieros</h2>
+    <p class="subtitle">Soluciones de crédito y ahorro con el respaldo que tu microempresa merece.</p>
+  </header>
+
+  <div class="tabs-container">
+    <button 
+      class="tab-btn" 
+      [class.active]="categoriaActiva === 'creditos'"
+      (click)="cambiarCategoria('creditos')">
+      💵 Créditos
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="categoriaActiva === 'ahorros'"
+      (click)="cambiarCategoria('ahorros')">
+      🐷 Ahorros
+    </button>
+  </div>
+
+  <div class="products-grid" *ngIf="categoriaActiva === 'creditos'">
+    <div class="product-item-card accent-yale">
+      <div class="card-body">
+        <h3>Capital de Trabajo</h3>
+        <p>Financiamiento ágil para compra de mercadería, materias primas o insumos para tus campañas comerciales.</p>
+      </div>
+    </div>
+
+    <div class="product-item-card accent-airforce">
+      <div class="card-body">
+        <h3>Activo Fijo</h3>
+        <p>Te prestamos el dinero necesario para adquirir maquinarias, equipos de trabajo o ampliar tu local comercial.</p>
+      </div>
+    </div>
+
+    <div class="product-item-card accent-cambridge">
+      <div class="card-body">
+        <h3>Consumo Directo</h3>
+        <p>Préstamos de libre disponibilidad diseñados para cubrir tus necesidades personales y gastos de consumo de forma rápida.</p>
+      </div>
+    </div>
+
+    <div class="product-item-card accent-mindaro">
+      <div class="card-body">
+        <h3>Pro Rapidito</h3>
+        <p>Evaluación exprés y desembolso al instante para oportunidades de negocio inmediatas que no pueden esperar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-grid" *ngIf="categoriaActiva === 'ahorros'">
+    <div class="product-item-card accent-yale">
+      <div class="card-body">
+        <h3>Depósito a Plazo Fijo</h3>
+        <p>Rentabiliza tus ganancias dejando crecer tus ahorros con una tasa de interés preferencial garantizada (TREA hasta 7.5%).</p>
+      </div>
+    </div>
+
+    <div class="product-item-card accent-cambridge">
+      <div class="card-body">
+        <h3>Ahorro Simple / Sueldo</h3>
+        <p>Mantén tu dinero seguro con total disponibilidad. Sin cobro de comisiones por mantenimiento ni sorpresas.</p>
+      </div>
+    </div>
+
+    <div class="product-item-card accent-airforce">
+      <div class="card-body">
+        <h3>Ahorro Programado</h3>
+        <p>Construye tu fondo de reserva o el pie de tu próxima inversión mediante depósitos mensuales automatizados.</p>
+      </div>
+    </div>
+  </div>
+
+</div>

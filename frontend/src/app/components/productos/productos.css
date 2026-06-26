@@ -1,0 +1,113 @@
+/* ==========================================================================
+   ESTILOS PARA LA PANTALLA DE PRODUCTOS (Estilo Corporativo Limpio)
+   ========================================================================== */
+
+.productos-container {
+  padding: 40px 4%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+/* Encabezado */
+.productos-header {
+  margin-bottom: 35px;
+}
+.productos-header h2 {
+  color: #1B4079; /* Yale Blue */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+.productos-header .subtitle {
+  color: #4D7C8A; /* Air Force Blue */
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Contenedor de Pestañas / Tabs */
+.tabs-container {
+  display: flex;
+  gap: 12px;
+  border-bottom: 2px solid rgba(77, 124, 138, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 30px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid rgba(77, 124, 138, 0.3);
+  color: #4D7C8A;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 20px; /* Botones ovalados suaves */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background-color: rgba(77, 124, 138, 0.05);
+  color: #1B4079;
+}
+
+/* Pestaña Activa */
+.tab-btn.active {
+  background-color: #1B4079;
+  color: #ffffff;
+  border-color: #1B4079;
+}
+
+/* Rejilla de Tarjetas */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Tarjeta Base de Producto */
+.product-item-card {
+  background: #ffffff;
+  border: 1px solid rgba(77, 124, 138, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(27, 64, 121, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.product-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(27, 64, 121, 0.06);
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.card-body h3 {
+  color: #1B4079;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.card-body p {
+  color: #4D7C8A;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Bordes Superiores Temáticos basados exclusivamente en tu paleta */
+.accent-yale {
+  border-top: 4px solid #1B4079;
+}
+.accent-airforce {
+  border-top: 4px solid #4D7C8A;
+}
+.accent-cambridge {
+  border-top: 4px solid #7F9C96;
+}
+.accent-mindaro {
+  border-top: 4px solid #CBDF90;
+}

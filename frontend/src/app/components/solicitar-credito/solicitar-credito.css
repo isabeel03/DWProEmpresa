@@ -1,0 +1,217 @@
+/* Contenedor General de la Página */
+.simulador-page {
+  background: #f4f7f6;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Tarjeta Principal */
+.simulador-container {
+  background: white;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(27, 64, 121, 0.06);
+  overflow: hidden;
+  border: 1px solid rgba(77, 124, 138, 0.1);
+}
+
+/* Título Real Centrado */
+.simulador-header {
+  border-bottom: 1px solid #f0f4f3;
+  padding: 25px 35px;
+  text-align: center;
+}
+.simulador-header h2 {
+  color: #1B4079; /* Yale Blue */
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Formulario */
+.simulador-form {
+  padding: 30px 35px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+.form-group label, .section-label {
+  display: block;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Inputs y Selectores Limpios */
+.simulador-form input[type="text"],
+.simulador-form input[type="number"],
+.simulador-form input[type="date"],
+.form-select-clean {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #4D7C8A; /* Air Force Blue */
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+.simulador-form input:focus {
+  border-color: #1B4079;
+  box-shadow: 0 0 0 3px rgba(27, 64, 121, 0.1);
+  outline: none;
+}
+
+/* Grid de TEA, Cuotas y Fecha */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+/* Input especial con sufijo % */
+.input-suffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-suffix .suffix-text {
+  position: absolute;
+  right: 15px;
+  color: #7F9C96;
+  font-weight: bold;
+}
+
+/* Estilo de Radio Buttons Reales de ProEmpresa */
+.form-section {
+  margin-bottom: 22px;
+}
+.radio-group {
+  display: flex;
+  gap: 30px;
+  margin-top: 5px;
+}
+.radio-group.inline {
+  gap: 15px;
+  margin-bottom: 8px;
+}
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+.radio-label input[type="radio"] {
+  display: none;
+}
+.custom-radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #8FAD88; /* Cambridge Blue */
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+.radio-label input[type="radio"]:checked + .custom-radio {
+  border-color: #1B4079;
+  background: #CBDF90; /* Mindaro Acento */
+}
+.radio-label input[type="radio"]:checked + .custom-radio::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #1B4079;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Cajas contenedoras de Seguros */
+.group-box {
+  background: #fafbfa;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border-left: 4px solid #8FAD88;
+}
+.info-icon {
+  background: #4D7C8A;
+  color: white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+/* Caja de Visualización de la Cuota */
+.cuota-display-box {
+  background: rgba(203, 223, 144, 0.2); /* Fondo Mindaro suave */
+  border: 1px dashed #8FAD88;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 25px 0;
+}
+.cuota-label {
+  display: block;
+  font-size: 13px;
+  color: #4D7C8A;
+  font-weight: 600;
+}
+.cuota-amount {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1B4079;
+}
+
+/* Botones Ovalados Reales de ProEmpresa */
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.btn-proempresa-submit {
+  background: #1B4079; /* Yale Blue */
+  color: white;
+  border: 2px solid #1B4079;
+  padding: 13px;
+  border-radius: 25px; /* Botón ovalado de la captura */
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-proempresa-submit:hover {
+  background: #122f5c;
+  border-color: #122f5c;
+}
+.btn-proempresa-cancel {
+  background: transparent;
+  color: #4D7C8A;
+  border: 2px solid #4D7C8A;
+  padding: 11px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-proempresa-cancel:hover {
+  background: rgba(77, 124, 138, 0.05);
+}

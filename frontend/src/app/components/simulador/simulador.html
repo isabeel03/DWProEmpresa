@@ -1,65 +1,173 @@
-<div class="page-container">
-  <h1 class="page-title">Simulador de Crédito Empresarial</h1>
-  <p class="page-subtitle">Calcula de forma rápida y transparente la cuota estimada para impulsar tu negocio.</p>
+<div class="simulador-container">
+  
+  <div class="simulador-main-title">
+    <h1>Simulador de Crédito Personal y Empresarial</h1>
+    <p>Configura las condiciones de tu préstamo y obtén el desglose financiero detallado al instante.</p>
+  </div>
 
-  <div class="simulator-layout">
-    <div class="simulator-card form-box">
-      <h2>Ingresa los datos de tu solicitud</h2>
+  <div class="simulador-grid">
+    
+    <div class="card-pane form-pane">
+      <h2 class="pane-subtitle">Configura tu Crédito</h2>
       
-      <div class="form-group">
-        <label for="monto">¿Cuánto dinero necesitas? (S/.)</label>
-        <input type="number" id="monto" [(ngModel)]="monto" name="monto" min="1000" max="50000" step="500">
-        <small class="help-text">Monto permitido: Desde S/. 1,000 hasta S/. 50,000</small>
-      </div>
+      <form class="credit-form">
+        
+        <div class="form-section">
+          <label class="input-label">Elige el tipo de crédito</label>
+          <div class="radio-row">
+            <label class="custom-radio">
+              <input type="radio" name="tipo_credito" value="Negocios" [(ngModel)]="tipo_credito" (change)="actualizarProducto()">
+              <span class="radio-circle"></span> Negocios
+            </label>
+            <label class="custom-radio">
+              <input type="radio" name="tipo_credito" value="Personas" [(ngModel)]="tipo_credito" (change)="actualizarProducto()">
+              <span class="radio-circle"></span> Personas
+            </label>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label for="cuotas">Plazo de pago (Meses)</label>
-        <select id="cuotas" [(ngModel)]="selectedCuotas" name="cuotas">
-          <option *ngFor="let mes of plazosDisponibles" [value]="mes">{{ mes }} meses</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label class="input-label">Seleccione Producto</label>
+          <select class="form-select" name="producto" [(ngModel)]="producto" (change)="actualizarProducto()">
+            <option value="consumo_directo" *ngIf="tipo_credito === 'Personas'">CONSUMO DIRECTO</option>
+            <option value="capital_trabajo" *ngIf="tipo_credito === 'Negocios'">CAPITAL DE TRABAJO</option>
+          </select>
+          <small class="product-desc" *ngIf="tipo_credito === 'Personas'">Para tus gastos personales y/o de consumo.</small>
+          <small class="product-desc" *ngIf="tipo_credito === 'Negocios'">Financia el crecimiento y stock de tu negocio.</small>
+        </div>
 
-      <div class="form-group">
-        <label for="tipoCredito">Tipo de Crédito</label>
-        <select id="tipoCredito" [(ngModel)]="tipoCredito" (change)="actualizarTasa()" name="tipoCredito">
-          <option value="capital">Capital de Trabajo (TEA: 28%)</option>
-          <option value="activo">Activo Fijo / Maquinaria (TEA: 24%)</option>
-        </select>
-      </div>
+        <div class="form-section">
+          <div class="radio-row">
+            <label class="custom-radio">
+              <input type="radio" name="moneda" value="Soles" [(ngModel)]="moneda">
+              <span class="radio-circle"></span> Soles
+            </label>
+            <label class="custom-radio">
+              <input type="radio" name="moneda" value="Dólares" [(ngModel)]="moneda" disabled>
+              <span class="radio-circle"></span> Dólares
+            </label>
+          </div>
+        </div>
 
-      <button class="btn-calc" (click)="calcularCuota()">Calcular Cuota Mensual</button>
+        <div class="form-group">
+          <label class="input-label">Importe (S/)</label>
+          <input type="number" name="monto" [(ngModel)]="monto" (input)="calcularCuota()" placeholder="7000" class="form-input">
+        </div>
+
+        <div class="form-triple-grid">
+          <div class="form-group">
+            <label class="input-label">TEA</label>
+            <select name="tea" [(ngModel)]="tea" (change)="calcularCuota()" class="form-input">
+              <option *ngFor="let t of tasasDisponibles" [value]="t">{{ t | number:'1.2-2' }}%</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label">N° Cuotas</label>
+            <input type="number" name="plazo" [(ngModel)]="plazo" (input)="calcularCuota()" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label class="input-label">Desembolso</label>
+            <input type="date" name="fecha_desembolso" [(ngModel)]="fecha_desembolso" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-section insurance-box">
+          <div class="insurance-header">
+            <label class="input-label">Seguro Desgravamen <span class="info-icon">i</span></label>
+            <div class="radio-row compact">
+              <label class="custom-radio">
+                <input type="radio" name="tiene_desgravamen" value="si" [(ngModel)]="tiene_desgravamen" (change)="calcularCuota()">
+                <span class="radio-circle"></span> si
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="tiene_desgravamen" value="no" [(ngModel)]="tiene_desgravamen" (change)="calcularCuota()">
+                <span class="radio-circle"></span> no
+              </label>
+            </div>
+          </div>
+          <select class="form-select-clean" name="tipo_desgravamen" [(ngModel)]="tipo_desgravamen" [disabled]="tiene_desgravamen === 'no'">
+            <option value="básico">Desgravamen Básico: 0.095%</option>
+          </select>
+        </div>
+
+        <div class="form-section insurance-box">
+          <div class="insurance-header">
+            <label class="input-label">Seguro Optativo</label>
+            <div class="radio-row compact">
+              <label class="custom-radio">
+                <input type="radio" name="tiene_optativo" value="si" [(ngModel)]="tiene_optativo" (change)="calcularCuota()">
+                <span class="radio-circle"></span> si
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="tiene_optativo" value="no" [(ngModel)]="tiene_optativo" (change)="calcularCuota()">
+                <span class="radio-circle"></span> no
+              </label>
+            </div>
+          </div>
+          <select class="form-select-clean" [disabled]="tiene_optativo === 'no'">
+            <option>Seguro Protegido MYPE</option>
+          </select>
+        </div>
+
+      </form>
     </div>
 
-    <div class="simulator-card result-box" *ngIf="simulacionCalculada">
-      <h2>Resultado de tu Simulación</h2>
-      <div class="result-highlight">
-        <span class="result-label">Cuota Mensual Estimada:</span>
-        <span class="result-value">S/. {{ cuotaEstimada | number:'1.2-2' }}</span>
-      </div>
+    <div class="card-pane results-pane">
+      <h2 class="pane-subtitle">Resumen Detallado del Reporte</h2>
       
-      <div class="result-details">
-        <div class="detail-row">
-          <span>Monto Solicitado:</span>
-          <strong>S/. {{ monto | number:'1.2-2' }}</strong>
+      <div class="cuota-hero-box">
+        <span class="hero-label">Cuota Mensual Estimada:</span>
+        <div class="hero-value">S/. {{ cuotaEstimada | number:'1.2-2' }}</div>
+      </div>
+
+      <div class="financial-summary-table">
+        <div class="summary-row">
+          <span>PRODUCTO:</span>
+          <strong>{{ producto === 'consumo_directo' ? 'CONSUMO DIRECTO' : 'CAPITAL DE TRABAJO' }}</strong>
         </div>
-        <div class="detail-row">
-          <span>Plazo elegido:</span>
-          <strong>{{ selectedCuotas }} meses</strong>
+        <div class="summary-row">
+          <span>Moneda / Importe:</span>
+          <strong>{{ moneda }} / S/. {{ monto | number:'1.2-2' }}</strong>
         </div>
-        <div class="detail-row">
-          <span>Tasa Efectiva Anual (TEA):</span>
-          <strong>{{ tasaInteres * 100 }}%</strong>
+        <div class="summary-row">
+          <span>TEA Seleccionada:</span>
+          <strong>{{ tea | number:'1.2-2' }}%</strong>
         </div>
-        <div class="detail-row">
-          <span>Total de intereses aprox:</span>
+        <div class="summary-row">
+          <span>TCEA (Costo Efectivo):</span>
+          <strong>{{ tceaCalculada | number:'1.2-2' }}%</strong>
+        </div>
+        <div class="summary-row">
+          <span>Cantidad de Cuotas:</span>
+          <strong>{{ plazo }} meses</strong>
+        </div>
+        <div class="summary-row">
+          <span>Total Intereses:</span>
           <strong>S/. {{ totalIntereses | number:'1.2-2' }}</strong>
         </div>
+        <div class="summary-row">
+          <span>Total Seguros:</span>
+          <strong>S/. {{ totalSeguros | number:'1.2-2' }}</strong>
+        </div>
+        <div class="summary-row total-row">
+          <span>Monto Total a Pagar:</span>
+          <strong class="text-blue">S/. {{ totalAPagar | number:'1.2-2' }}</strong>
+        </div>
       </div>
 
-      <div class="result-footer">
-        <p class="disclaimer">* Esta simulación es referencial y está sujeta a evaluación crediticia. No incluye seguro de desgravamen ni comisiones.</p>
-        <button class="btn-solicitar" routerLink="/contacto">Solicitar Asesoría Comercial</button>
+      <div class="disclaimer-container">
+        <p>• El cronograma de cuotas es referencial basado en la TEA seleccionada.</p>
+        <p>• La simulación no significa la aprobación directa del crédito.</p>
+      </div>
+
+      <div class="actions-wrapper">
+        <button type="button" (click)="abrirModalContacto()" class="btn-primary-pro">
+          Solicitar Asesoría Comercial 🚀
+        </button>
       </div>
     </div>
+
   </div>
 </div>

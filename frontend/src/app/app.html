@@ -1,18 +1,35 @@
 <div class="site-wrapper">
+  
+  <div class="top-segment-bar">
+    <div class="segment-container">
+      <a href="#" class="segment-link active">Negocios</a>
+      <a href="#" class="segment-link">Personas</a>
+    </div>
+  </div>
+
   <header class="navbar">
     <div class="logo-area" routerLink="/">
-      <span class="logo-text">Pro<span class="accent">Empresa</span></span>
-      <small class="entity-type">Financiera</small>
+      <div class="brand-group">
+        <small class="entity-type">financiera</small>
+        <span class="logo-text">Pro<span class="accent">Empresa</span></span>
+      </div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="#1B4079" width="24" height="24">
+          <path d="M2 21h20V3L2 21zM11 19l-5-5h5v5zm4 0h-2v-7h2v7zm4 0h-2V9h2v10z"/>
+        </svg>
+      </div>
     </div>
     
     <nav class="nav-links">
-      <a routerLink="/productos" routerLinkActive="active-link">Productos ▾</a>
-      <a routerLink="/servicios" routerLinkActive="active-link">Servicios ▾</a>
-      <a routerLink="/contacto" routerLinkActive="active-link">Ayuda y contacto ▾</a>
-      <a routerLink="/canales" routerLinkActive="active-link">Canales ▾</a>
+      <a routerLink="/productos" routerLinkActive="active-link">Productos <span class="arrow">▾</span></a>
+      <a routerLink="/servicios" routerLinkActive="active-link">Servicios <span class="arrow">▾</span></a>
+      <a routerLink="/contacto" routerLinkActive="active-link">Ayuda y contacto <span class="arrow">▾</span></a>
+      <a routerLink="/canales" routerLinkActive="active-link">Canales <span class="arrow">▾</span></a>
     </nav>
 
-    <button class="btn-banca" routerLink="/banca-por-internet">Banca por Internet 🔒</button>
+    <button class="btn-banca" routerLink="/banca-por-internet">
+      Banca por Internet 🔒
+    </button>
   </header>
 
   <main class="content-body">

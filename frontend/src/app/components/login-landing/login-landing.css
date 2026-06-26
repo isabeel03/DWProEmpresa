@@ -1,89 +1,206 @@
-.landing-secure-container {
+
+.login-wrapper {
+  background-color: #f8fafc; /* Fondo general muy suave */
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--proempresa-blue-dark);
   padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.secure-box {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  max-width: 450px;
+/* Contenedor principal de dos columnas */
+.login-container {
+  background-color: #ffffff;
   width: 100%;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  max-width: 900px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(27, 64, 121, 0.1);
+  display: flex;
 }
 
-.shield-icon {
-  font-size: 50px;
-  margin-bottom: 15px;
+/* --- Panel Izquierdo (Identidad y Seguridad) --- */
+.identity-panel {
+  background-color: #1B4079; /* Yale Blue Corporativo */
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff;
 }
 
-.secure-box h2 {
-  margin: 0;
-  color: #333;
-  font-size: 24px;
+.brand-area {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
 }
 
-.bank-name {
-  font-size: 22px;
+.logo-text {
+  font-size: 28px;
   font-weight: 700;
-  color: var(--proempresa-blue-light);
-  margin-top: 5px;
-  margin-bottom: 25px;
 }
 
-.bank-name .accent {
-  color: var(--proempresa-orange);
+.logo-text .accent-green {
+  color: #CBDF90; /* Detalle de Mindaro */
 }
 
-/* Estilos para el criterio C2 - Mensaje de seguridad */
-.secure-badge {
-  background-color: #fff3cd;
-  border: 1px solid #ffeeba;
-  color: #856404;
-  padding: 15px;
-  border-radius: 6px;
-  font-size: 14px;
-  text-align: left;
-  line-height: 1.4;
-  margin-bottom: 25px;
+.entity-type {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
 }
 
-.instruction {
-  color: #666;
-  font-size: 15px;
+.lock-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.lock-shield {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lock-shield svg {
+  width: 50px;
+  height: 50px;
+}
+
+.welcome-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.welcome-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* --- Panel Derecho (Acciones y Alertas) --- */
+.action-panel {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Cuadro de Alerta: Zona Segura (Estilizado con Air Force Blue) */
+.security-alert-box {
+  background-color: rgba(127, 156, 150, 0.08); /* Fondo Cambridge Blue muy suave */
+  border: 1px solid rgba(77, 124, 138, 0.25); /* Borde Air Force Blue sutil */
+  border-radius: 8px;
+  padding: 20px;
   margin-bottom: 30px;
 }
 
-.btn-enter {
-  width: 100%;
-  background-color: var(--proempresa-orange);
-  color: white;
-  border: none;
-  padding: 14px;
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.alert-icon {
+  font-size: 20px;
+}
+
+.security-alert-box h3 {
+  margin: 0;
   font-size: 16px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
+  font-weight: 700;
+  color: #1B4079; /* Yale Blue */
 }
 
-.btn-enter:hover {
-  background-color: #e68a00;
-}
-
-.btn-back {
-  display: inline-block;
-  margin-top: 20px;
-  color: #888;
-  text-decoration: none;
+.security-alert-box p {
+  margin: 0;
   font-size: 14px;
+  color: #4D7C8A; /* Air Force Blue */
+  line-height: 1.6;
 }
 
-.btn-back:hover {
-  color: var(--proempresa-blue-light);
+.security-alert-box strong {
+  color: #1B4079;
+}
+
+/* Texto descriptivo intermedio */
+.info-text {
+  color: #4D7C8A;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 35px 0;
+}
+
+/* Botón de ingreso (Usando Cambridge Blue) */
+.btn-primary-login {
+  background-color: #8FAD88; /* Cambridge Blue destacado */
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(143, 173, 136, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary-login:hover {
+  background-color: #76916f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(143, 173, 136, 0.4);
+}
+
+.btn-primary-login:active {
+  transform: translateY(0);
+}
+
+/* Link de regreso inferior */
+.back-link-container {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.btn-back-home {
+  color: #4D7C8A; /* Air Force Blue sutil */
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.btn-back-home:hover {
+  color: #1B4079;
+  text-decoration: underline;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 480px;
+  }
+  
+  .identity-panel, .action-panel {
+    padding: 30px;
+  }
+  
+  .welcome-title {
+    font-size: 26px;
+  }
 }
