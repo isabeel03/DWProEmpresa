@@ -479,3 +479,26 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+.report-nav-bar {
+  display: flex;
+  gap: 15px;
+  padding: 15px 25px;
+  background: #0b1120;
+  border-bottom: 2px solid #1e293b;
+  margin-bottom: 10px;
+}
+.btn-nav {
+  padding: 10px 20px;
+  background: #1e293b;
+  color: #f8fafc;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+.btn-nav:hover {
+  background: #334155;
+}

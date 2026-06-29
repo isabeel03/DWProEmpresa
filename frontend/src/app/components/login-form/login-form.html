@@ -1,5 +1,5 @@
 <div class="login-wrapper">
-  <div class="login-container">
+  <div class="login-container" [ngClass]="esAdmin ? 'theme-admin' : 'theme-client'">
     
     <div class="brand-header">
       <h2 class="main-title">ProEmpresa</h2>
@@ -7,53 +7,22 @@
     </div>
 
     <div class="tabs-container">
-      <button 
-        type="button" 
-        class="tab-button" 
-        [class.active]="!esAdmin" 
-        (click)="cambiarModo(false)">
-        Clientes
-      </button>
-      <button 
-        type="button" 
-        class="tab-button" 
-        [class.active]="esAdmin" 
-        (click)="cambiarModo(true)">
-        Personal Core
-      </button>
+      <button type="button" class="tab-button" [class.active]="!esAdmin" (click)="cambiarModo(false)">Clientes</button>
+      <button type="button" class="tab-button" [class.active]="esAdmin" (click)="cambiarModo(true)">Personal Core</button>
     </div>
 
-    <div *ngIf="errorMessage" class="alert alert-error">
-      {{ errorMessage }}
-    </div>
-
-    <div *ngIf="successMessage" class="alert alert-success">
-      {{ successMessage }}
-    </div>
+    <div *ngIf="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
     <form (ngSubmit)="onLoginSubmit()" #loginForm="ngForm">
-      
       <div *ngIf="!esAdmin" class="input-group">
         <label for="username">Código de Cliente o Correo</label>
-        <input 
-          type="text" 
-          id="username"
-          [(ngModel)]="emailInput" 
-          name="emailInput" 
-          placeholder="Ej: cli000007 o correo"
-          required>
+        <input type="text" id="username" [(ngModel)]="emailInput" name="emailInput" placeholder="Ej: cli000007 o correo" required>
       </div>
 
       <div *ngIf="esAdmin" class="input-group">
         <label for="dni">DNI Institucional</label>
-        <input 
-          type="text" 
-          id="dni"
-          [(ngModel)]="dniInput" 
-          name="dniInput" 
-          placeholder="Ingrese su DNI"
-          maxlength="8"
-          required>
+        <input type="text" id="dni" [(ngModel)]="dniInput" name="dniInput" placeholder="Ingrese su DNI" maxlength="8" required>
       </div>
 
       <div class="input-group">
@@ -61,22 +30,12 @@
           <label for="password">Contraseña de Acceso</label>
           <span *ngIf="esAdmin" class="hint-tag">Clave = DNI</span>
         </div>
-        <input 
-          type="password" 
-          id="password"
-          [(ngModel)]="passwordInput" 
-          name="passwordInput" 
-          placeholder="••••••••"
-          required>
+        <input type="password" id="password" [(ngModel)]="passwordInput" name="passwordInput" placeholder="••••••••" required>
       </div>
 
-      <button 
-        type="submit" 
-        class="btn-submit" 
-        [disabled]="loading || !loginForm.form.valid">
+      <button type="submit" class="btn-submit" [disabled]="loading || !loginForm.form.valid">
         {{ loading ? 'Verificando datos...' : 'Ingresar a mi Cuenta' }}
       </button>
-
     </form>
   </div>
 </div>

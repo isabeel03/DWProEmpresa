@@ -5,6 +5,10 @@
   import { DashboardComponent } from './components/dashboard/dashboard';
   import { authGuard } from './guards/auth-guard';
 
+  import { ReporteResumen } from './components/reporte-resumen/reporte-resumen';
+  import { ReporteMora } from './components/reporte-mora/reporte-mora';
+  import { ReporteDesembolsos } from './components/reporte-desembolsos/reporte-desembolsos';
+
   import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
   import { SolicitarCreditoComponent } from './components/solicitar-credito/solicitar-credito';
 
@@ -24,6 +28,10 @@
     { path: 'simulador', component: SimuladorComponent },
     { path: 'core-bancario', component: DashboardAdminComponent },
     { path: 'solicitar-credito', component: SolicitarCreditoComponent },
+
+    { path: 'admin/resumen', component: ReporteResumen },
+  { path: 'admin/mora', component: ReporteMora },
+  { path: 'admin/desembolsos', component: ReporteDesembolsos },
     
     // Rutas de Banca por Internet
     { path: 'banca-por-internet', component: LoginLandingComponent },

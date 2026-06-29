@@ -8,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AuthService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = 'https://dwproempresa.onrender.com/api';
   private isBrowser: boolean;
 
   constructor(

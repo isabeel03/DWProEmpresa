@@ -1,154 +1,31 @@
-.login-wrapper {
-  background-color: #f4f6f9;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
-}
+/* --- CAMBIOS DE TEMA (LA MAGIA) --- */
+/* MODO CLIENTE: Azul */
+.theme-client { --main-color: #003366; --bg-accent: #f0f7ff; }
+/* MODO ADMIN: Verde */
+.theme-admin { --main-color: #00875a; --bg-accent: #e6f4ea; }
 
-.login-container {
-  background: #ffffff;
-  width: 100%;
-  max-width: 420px;
-  border-radius: 12px;
-  padding: 35px 30px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-}
+.login-wrapper { background-color: #f4f6f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; font-family: 'Segoe UI', Roboto, sans-serif; box-sizing: border-box; }
 
-.brand-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
+.login-container { background: #ffffff; width: 100%; max-width: 420px; border-radius: 12px; padding: 35px 30px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border-top: 8px solid var(--main-color); }
 
-.main-title {
-  color: #00875a; /* Verde ProEmpresa */
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 5px 0;
-}
+.main-title { color: var(--main-color); font-size: 28px; font-weight: 700; margin: 0 0 5px 0; }
 
-.subtitle {
-  color: #4a5568;
-  font-size: 15px;
-  margin: 0;
-}
+.tab-button.active { background: var(--bg-accent); color: var(--main-color); }
 
-/* Pestañas de Navegación */
-.tabs-container {
-  display: flex;
-  background: #edf2f7;
-  padding: 4px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-}
+.hint-tag { color: var(--main-color); background: var(--bg-accent); padding: 2px 6px; border-radius: 4px; }
 
-.tab-button {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #718096;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
+.input-group input:focus { border-color: var(--main-color); }
 
-.tab-button.active {
-  background: #ffffff;
-  color: #003366; /* Azul Oscuro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
+.btn-submit { width: 100%; background: var(--main-color); color: #ffffff; border: none; padding: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; }
 
-/* Inputs y Formularios */
-.input-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.input-group label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #4a5568;
-  margin-bottom: 6px;
-}
-
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hint-tag {
-  font-size: 11px;
-  color: #00875a;
-  background: #e6f4ea;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-  font-size: 15px;
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.2s;
-}
-
-.input-group input:focus {
-  border-color: #00875a;
-}
-
-/* Botón de Acción */
-.btn-submit {
-  width: 100%;
-  background: #00875a; /* Verde Institucional */
-  color: #ffffff;
-  border: none;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-submit:hover:not(:disabled) {
-  background: #006c48;
-}
-
-.btn-submit:disabled {
-  background: #a0aec0;
-  cursor: not-allowed;
-}
-
-/* Alertas */
-.alert {
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.alert-error {
-  background: #fff5f5;
-  color: #c53030;
-  border: 1px solid #fed7d7;
-}
-
-.alert-success {
-  background: #f0fff4;
-  color: #2f855a;
-  border: 1px solid #c6f6d5;
-}
+/* Mantener el resto de tus estilos originales intactos */
+.brand-header { text-align: center; margin-bottom: 25px; }
+.subtitle { color: #4a5568; font-size: 15px; }
+.tabs-container { display: flex; background: #edf2f7; padding: 4px; border-radius: 8px; margin-bottom: 25px; }
+.tab-button { flex: 1; border: none; padding: 10px; font-size: 14px; font-weight: 600; color: #718096; cursor: pointer; }
+.input-group { display: flex; flex-direction: column; margin-bottom: 20px; text-align: left; }
+.input-group label { font-size: 13px; font-weight: 600; color: #4a5568; margin-bottom: 6px; }
+.input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; }
+.alert { padding: 12px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; }
+.alert-error { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+.alert-success { background: #f0fff4; color: #2f855a; border: 1px solid #c6f6d5; }

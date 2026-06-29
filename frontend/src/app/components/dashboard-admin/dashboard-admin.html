@@ -11,11 +11,15 @@
         <span class="user-name">Bienvenido(a), <strong>{{ empleadoNombre }}</strong></span>
         <span class="role-pill">{{ empleadoRol | uppercase }}</span>
       </div>
-      <button class="btn-logout-exec" (click)="cerrarSesion()">
-        Cerrar Sesión 🚪
-      </button>
+      <button class="btn-logout-exec" (click)="cerrarSesion()">Cerrar Sesión 🚪</button>
     </div>
   </header>
+
+  <nav class="report-nav-bar">
+    <button routerLink="/admin/resumen" class="btn-nav">📊 Resumen Ejecutivo</button>
+    <button routerLink="/admin/mora" class="btn-nav">⚠️ Análisis de Mora</button>
+    <button routerLink="/admin/desembolsos" class="btn-nav">📈 Análisis de Desembolsos</button>
+  </nav>
 
   <section class="kpi-dashboard-grid">
     <div class="kpi-panel-card card-green">
@@ -75,174 +79,12 @@
   </div>
 
   <main class="dashboard-main-content">
-    
     <div *ngIf="vistaActual === 'solicitudes'" class="table-executive-card">
-      <table class="banking-core-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>CÓDIGO CLIENTE</th>
-            <th>MONTO SOLICITADO</th>
-            <th>RATIO R.D.S.</th>
-            <th>SCORING</th>
-            <th>SEMÁFORO</th>
-            <th>ESTADO EXPEDIENTE</th>
-            <th class="text-center">ACCIONES OPERATIVAS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sol of solicitudes">
-            <td class="cell-id">#{{ sol.id }}</td>
-            <td class="cell-muted">{{ sol.cliente_id }}</td>
-            <td class="cell-bold-amount">S/ {{ sol.monto_solicitado | number:'1.2-2' }}</td>
-            <td>
-              <div class="ratio-container">
-                <span class="ratio-num">{{ sol.rds_ratio }}%</span>
-                <div class="mini-bar">
-                  <div class="mini-fill" [style.width.%]="sol.rds_ratio > 100 ? 100 : sol.rds_ratio"></div>
-                </div>
-              </div>
-            </td>
-            <td><span class="scoring-pill">{{ sol.scoring_puntos || 0 }} pts</span></td>
-            <td>
-              <span class="semaphore-pill-clean" 
-                    [ngClass]="{'pill-green': sol.semaforo_riesgo === 'Verde', 'pill-yellow': sol.semaforo_riesgo === 'Amarillo', 'pill-red': sol.semaforo_riesgo === 'Rojo'}">
-                {{ sol.semaforo_riesgo || 'Verde' }}
-              </span>
-            </td>
-            <td>
-              <span class="state-text-bold" 
-                    [ngClass]="{'txt-green': sol.estado === 'Desembolsado' || sol.estado === 'Aprobado', 'txt-red': sol.estado === 'Rechazado', 'txt-yellow': sol.estado === 'Pendiente' || sol.estado === 'Enviado a Comité'}">
-                {{ sol.estado }}
-              </span>
-            </td>
-            <td class="text-center">
-              <div class="actions-flex-container justify-center">
-                <button *ngIf="sol.estado === 'Pendiente' || sol.estado === 'Enviado a Comité'" 
-                        class="btn-core-action btn-core-info" 
-                        (click)="abrirEvaluacion(sol)">
-                  Evaluar 🔍
-                </button>
-                <span *ngIf="sol.estado !== 'Pendiente' && sol.estado !== 'Enviado a Comité'" class="lbl-attended">
-                  Atendido ✓
-                </span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+       </div>
     <div *ngIf="vistaActual === 'mora'" class="table-executive-card">
-      <table class="banking-core-table table-mora-custom">
-        <thead>
-          <tr>
-            <th>CRÉDITO ID</th>
-            <th>CLIENTE ASIGNADO</th>
-            <th>MONTO DESEMBOLSADO</th>
-            <th>DÍAS DE MORA</th>
-            <th>CLASIFICACIÓN (BANDA)</th>
-            <th class="text-center">ACCIONES LEGALES / CONTABLES</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let mor of bandejaMora">
-            <td class="cell-id">#{{ mor.id }}</td>
-            <td class="cell-muted">{{ mor.cliente_codigo_desarrollo || mor.cliente_id }}</td>
-            <td class="cell-bold-amount text-dark-blue">S/ {{ mor.monto_desembolsado | number:'1.2-2' }}</td>
-            <td class="cell-alert-days">{{ mor.dias_mora }} días atrasados</td>
-            <td>
-              <span class="mora-band-badge" [ngClass]="{'band-judicial': mor.banda_mora === 'Judicial', 'band-castigo': mor.banda_mora === 'Castigo'}">
-                {{ mor.banda_mora }}
-              </span>
-            </td>
-            <td class="text-center">
-              <div class="actions-flex-container justify-center">
-                <button *ngIf="mor.dias_mora >= 121 && mor.banda_mora !== 'Judicial' && mor.banda_mora !== 'Castigo'"
-                        (click)="procesarAccionCobranza(mor.id, 'Derivar Judicial')"
-                        class="btn-core-action btn-core-warning">
-                  ⚖ Derivar Judicial
-                </button>
-                
-                <button *ngIf="mor.dias_mora > 180 && mor.banda_mora !== 'Castigo'"
-                        (click)="procesarAccionCobranza(mor.id, 'Castigar')"
-                        class="btn-core-action btn-core-dark">
-                  💀 Castigar Crédito
-                </button>
-                <span *ngIf="mor.banda_mora === 'Judicial' || mor.banda_mora === 'Castigo'" class="lbl-process-ended">
-                  Proceso Ejecutivo Iniciado
-                </span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+       </div>
   </main>
 </div>
 
 <div class="modal-overlay" *ngIf="modalEvaluacion">
-  <div class="modal-card evaluation-modal">
-    
-    <div class="modal-header">
-      <div>
-        <h3>Evaluar solicitud de crédito</h3>
-        <p class="modal-subtitle">ID #{{ solicitudSeleccionada?.id }} · Cliente: {{ solicitudSeleccionada?.cliente_id }}</p>
-      </div>
-      <button class="close-x" (click)="cerrarModalEvaluacion()">×</button>
-    </div>
-
-    <div class="modal-body">
-      <div class="info-summary-grid">
-        <div class="info-box-mini">
-          <span class="lbl">Monto solicitado</span>
-          <div class="val text-blue">S/ {{ solicitudSeleccionada?.monto_solicitado | number:'1.2-2' }}</div>
-        </div>
-        <div class="info-box-mini">
-          <span class="lbl">Plazo</span>
-          <div class="val">{{ solicitudSeleccionada?.plazo_meses || 12 }} meses</div>
-        </div>
-        <div class="info-box-mini">
-          <span class="lbl">Score</span>
-          <div class="val points">{{ solicitudSeleccionada?.scoring_puntos || 0 }} pts</div>
-        </div>
-        <div class="info-box-mini">
-          <span class="lbl">Ratio C/I (RDS)</span>
-          <div class="val ratio-color">{{ solicitudSeleccionada?.rds_ratio || '0.00' }}%</div>
-        </div>
-      </div>
-
-      <div class="system-alert-badge" [ngClass]="solicitudSeleccionada?.semaforo_riesgo | lowercase">
-        🚀 El sistema califica este riesgo como: <strong>{{ solicitudSeleccionada?.semaforo_riesgo || 'VERDE' | uppercase }}</strong>
-      </div>
-
-      <div class="form-group" style="margin-top: 15px;">
-        <label class="form-main-label">Observación del evaluador</label>
-        <textarea 
-          class="input-control textarea-observacion" 
-          [(ngModel)]="observacionEvaluador" 
-          placeholder="Escribe el motivo de la decisión (opcional)...">
-        </textarea>
-      </div>
-
-      <div class="action-buttons-row">
-        <button class="btn-action-dismiss" (click)="cerrarModalEvaluacion()">Cancelar</button>
-        
-        <div class="decision-group">
-          <button class="btn-action-reject" (click)="procesarDecision('Rechazado')">
-            ✕ Rechazar
-          </button>
-          
-          <button 
-            class="btn-action-approve" 
-            [ngClass]="{'disabled-btn': solicitudSeleccionada?.semaforo_riesgo === 'Rojo'}"
-            (click)="procesarDecision('Aprobado')">
-            ✓ Aprobar crédito
-          </button>
-        </div>
-      </div>
-
-    </div>
   </div>
-</div>
