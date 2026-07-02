@@ -32,44 +32,47 @@ export class LoginFormComponent {
     this.dniInput = '';
   }
 
-  onLoginSubmit() {
+onLoginSubmit() {
+    // Validación básica antes de llamar al servicio
+    if (this.esAdmin && (!this.dniInput || !this.passwordInput)) {
+      this.errorMessage = "Por favor, ingrese DNI y Contraseña.";
+      return;
+    }
+    if (!this.esAdmin && (!this.emailInput || !this.passwordInput)) {
+      this.errorMessage = "Por favor, ingrese Email y Contraseña.";
+      return;
+    }
+
     this.loading = true;
     this.errorMessage = null;
-    this.successMessage = null;
 
     if (this.esAdmin) {
-      // 🚀 LOGIN PARA PERSONAL CORE
+      // Llamada directa a tu AuthService, que debe hacer el POST al backend
       this.authService.loginAdmin(this.dniInput, this.passwordInput).subscribe({
         next: (res) => {
           this.loading = false;
-          this.successMessage = `¡Bienvenido al Core Central, ${res.perfil?.nombre}!`;
-          this.router.navigate(['/core-bancario']);
+          // ASUMIMOS QUE EL BACKEND DEVUELVE EL PERFIL SI ES EXITOSO
+          if (res && res.perfil) {
+            this.router.navigate(['/core-bancario']);
+          } else {
+            this.errorMessage = "Error: Perfil de usuario no encontrado.";
+          }
         },
         error: (err) => {
           this.loading = false;
-          this.errorMessage = err.error?.detail || 'Error de autenticación en el Core Bancario.';
+          // Aquí capturamos el error real del backend (Ej: 401 Unauthorized)
+          this.errorMessage = err.error?.detail || 'Acceso denegado. Verifique sus credenciales.';
         }
       });
-
     } else {
-      // 🚀 LOGIN PARA CLIENTES (CORREGIDO PARA LOS 30 CASOS)
       this.authService.login(this.emailInput, this.passwordInput).subscribe({
         next: (res) => {
           this.loading = false;
-          
-          // 💡 CAPTURA DINÁMICA DE SEGURIDAD: 
-          // Si el input contiene un usuario tipo 'cliXXXXXX', forzamos que el token guarde su ID real.
-          const usuarioLimpio = this.emailInput.trim();
-          if (usuarioLimpio.startsWith('cli')) {
-            localStorage.setItem('token', `token_simulado_cliente_jwt_${usuarioLimpio}`);
-          }
-
-          this.successMessage = `Sesión iniciada correctamente.`;
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.loading = false;
-          this.errorMessage = err.error?.detail || 'Credenciales de Homebanking incorrectas.';
+          this.errorMessage = 'Credenciales de Homebanking incorrectas.';
         }
       });
     }

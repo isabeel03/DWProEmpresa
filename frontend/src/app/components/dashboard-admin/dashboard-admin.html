@@ -100,5 +100,21 @@
   </main>
 </div>
 
-<div class="modal-overlay" *ngIf="modalEvaluacion">
+<div class="modal-overlay" *ngIf="modalEvaluacion && solicitudSeleccionada">
+  <div class="modal-content">
+    <h3>Evaluación de Solicitud #{{ solicitudSeleccionada.id }}</h3>
+    <div class="modal-body">
+      <p><strong>Cliente:</strong> {{ solicitudSeleccionada.cliente_id }}</p>
+      <p><strong>Monto Solicitado:</strong> S/ {{ solicitudSeleccionada.monto_solicitado }}</p>
+      <p><strong>Estado Actual:</strong> {{ solicitudSeleccionada.estado }}</p>
+      
+      <textarea [(ngModel)]="observacionEvaluador" placeholder="Escribe aquí tu observación..." style="width: 100%; margin: 10px 0;"></textarea>
+    </div>
+    
+    <div class="modal-actions">
+      <button (click)="procesarDecision('Aprobado')" class="btn-approve">✅ Aprobar</button>
+      <button (click)="procesarDecision('Rechazado')" class="btn-reject">❌ Rechazar</button>
+      <button (click)="cerrarModalEvaluacion()">Cerrar</button>
+    </div>
+  </div>
 </div>
