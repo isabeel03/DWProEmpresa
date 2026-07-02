@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from supabase import create_client, Client
 import os
 from typing import Optional
+from collections import Counter
 
 router = APIRouter()
 
@@ -47,6 +48,26 @@ class EvaluacionPayload(BaseModel):
     estado: str
 
 
+
+
+@router.get("/admin/reportes/resumen")
+async def get_reporte_resumen():
+    try:
+        # Traemos todas las solicitudes para procesarlas en memoria
+        res = supabase.table("solicitudes_credito").select("semaforo_riesgo").execute()
+        
+        # Contamos cuántas hay por cada color
+        conteo = Counter(item.get('semaforo_riesgo') for item in res.data)
+        
+        # Retornamos el JSON que espera tu dashboard
+        return {
+            
+            "Verde": conteo.get("Verde", 0),
+            "Amarillo": conteo.get("Amarillo", 0),
+            "Rojo": conteo.get("Rojo", 0)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error en resumen: {str(e)}") 
 # ========================================================
 # 🚀 1. LOGIN EXCLUSIVO PARA CLIENTES (Homebanking - CORREGIDO)
 # ========================================================
@@ -288,17 +309,25 @@ async def enviar_a_comite(data: EnviarComiteInput):
 
 
 # ========================================================
-# 🚀 5. DASHBOARD ADMINISTRADOR (CORREGIDO PARA TRAER TODO)
+# 🚀 5. DASHBOARD ADMINISTRADOR (CORREGIDO Y OPTIMIZADO)
 # ========================================================
 @router.get("/admin/solicitudes")
 async def obtener_solicitudes_admin():
     try:
-        # Quitamos cualquier filtro restrictivo para que siempre pinte las solicitudes en tu bandeja
+        # Consulta explícita a la tabla
         res = supabase.table("solicitudes_credito").select("*").execute()
-        return res.data if res.data else []
+        
+        # Depuración: imprime en consola del servidor lo que recibe
+        print(f"DEBUG: Datos obtenidos de Supabase: {len(res.data) if res.data else 0} registros")
+        
+        # Retorno seguro: si res.data es None, devolvemos una lista vacía
+        if res.data:
+            return res.data
+        return []
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error en pasarela de datos: {str(e)}")
-
+        print(f"❌ ERROR CRÍTICO EN /admin/solicitudes: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener solicitudes: {str(e)}")
 
 # ========================================================
 # 🚀 6. EVALUAR SOLICITUD DESDE EL MODAL FLOTANTE (REOPTIMIZADO)
@@ -398,23 +427,27 @@ async def gestionar_mora_cartera(data: GestionMoraInput):
         raise http_ex
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
 
+    # --- NUEVAS RUTAS PARA CORREGIR EL 404 ---
 
-@router.get("/admin/reportes/resumen")
-def get_reporte_resumen():
-    # Esta consulta agrupa por semaforo en Supabase
-    response = supabase.table("solicitudes_credito").select("semaforo_riesgo,id.count()").group_by("semaforo_riesgo").execute()
-    return [{"semaforo_riesgo": item["semaforo_riesgo"], "total": item["count"]} for item in response.data]
-
-# 2. Reporte Mora
-@router.get("/admin/reportes/mora")
-def get_reporte_mora():
-    response = supabase.table("creditos_desembolsados").select("banda_mora,id.count()").group_by("banda_mora").execute()
-    return [{"banda_mora": item["banda_mora"], "total": item["count"]} for item in response.data]
-
-# 3. Reporte Desembolsos
 @router.get("/admin/reportes/desembolsos")
-def get_reporte_desembolsos():
-    # Traemos nombre del cliente (a través de la relación) y monto
-    response = supabase.table("creditos_desembolsados").select("monto_desembolsado, cliente_id").execute()
-    return [{"cliente": item["cliente_id"], "monto": item["monto_desembolsado"]} for item in response.data]
+async def get_reporte_desembolsos():
+    try:
+        # Obtiene los créditos ya desembolsados
+        res = supabase.table("creditos_desembolsados").select("*").execute()
+        return res.data if res.data else []
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/admin/reportes/mora")
+async def get_reporte_mora():
+    try:
+        # Filtra los créditos que tengan días de mora (asumiendo que > 0 es mora)
+        res = supabase.table("creditos_desembolsados").select("*").gt("dias_mora", 0).execute()
+        return res.data if res.data else []
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+        from collections import Counter
