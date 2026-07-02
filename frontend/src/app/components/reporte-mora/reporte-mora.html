@@ -1,9 +1,33 @@
-<div class="report-wrapper">
-  <header class="report-nav-header">
-    <button routerLink="/core-bancario" class="btn-back">← Volver</button>
-    <h1>Reporte</h1>
-  </header>
-  <div class="chart-container">
-    <ngx-charts-bar-vertical [results]="data" [xAxis]="true" [yAxis]="true"></ngx-charts-bar-vertical>
-  </div>
+<button routerLink="/core-bancario" class="btn-back">← Volver</button>
+<div class="dashboard-card">
+  <h2>Análisis Detallado de Mora por Oficina</h2>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+    <thead>
+      <tr style="border-bottom: 2px solid #2d3748; color: #a0aec0; text-align: left;">
+        <th style="padding: 12px;">Oficina</th><th style="padding: 12px;">Zona</th><th style="padding: 12px;">Cartera Total</th><th style="padding: 12px;">Vencida</th><th style="padding: 12px;">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #2d3748;">
+        <td style="padding: 12px;">AG. ORIENTE 2</td><td>Zona Oriente</td><td>S/ 7.8M</td><td>S/ 921K</td>
+        <td><span style="background: #742a2a; padding: 4px 8px; border-radius: 4px; color: #feb2b2;">Alto</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid #2d3748;">
+        <td style="padding: 12px;">AG. SUR 3</td><td>Zona Sur</td><td>S/ 9.2M</td><td>S/ 939K</td>
+        <td><span style="background: #742a2a; padding: 4px 8px; border-radius: 4px; color: #feb2b2;">Alto</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid #2d3748;">
+        <td style="padding: 12px;">AG. NORTE 6</td><td>Zona Norte</td><td>S/ 6.4M</td><td>S/ 557K</td>
+        <td><span style="background: #744210; padding: 4px 8px; border-radius: 4px; color: #fbd38d;">Medio</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid #2d3748;">
+        <td style="padding: 12px;">OF. PRINCIPAL</td><td>Zona Norte</td><td>S/ 22.1M</td><td>S/ 1.37M</td>
+        <td><span style="background: #744210; padding: 4px 8px; border-radius: 4px; color: #fbd38d;">Medio</span></td>
+      </tr>
+      <tr style="border-bottom: 1px solid #2d3748;">
+        <td style="padding: 12px;">AG. LIMA 1</td><td>Zona Lima</td><td>S/ 18.2M</td><td>S/ 691K</td>
+        <td><span style="background: #22543d; padding: 4px 8px; border-radius: 4px; color: #9ae6b4;">OK</span></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

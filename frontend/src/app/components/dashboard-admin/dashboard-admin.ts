@@ -65,7 +65,7 @@ export class DashboardAdminComponent implements OnInit {
 
 
   cargarSolicitudes(): void {
-    this.http.get<any[]>('https://dwproempresa.onrender.com/api/admin/solicitudes').subscribe({
+    this.http.get<any[]>(`${this.apiUrl}/admin/solicitudes`).subscribe({
       next: (data) => {
         this.solicitudes = data.map(sol => ({
           ...sol,
@@ -98,7 +98,7 @@ export class DashboardAdminComponent implements OnInit {
       observacion: this.observacionEvaluador || 'Evaluación procesada desde el Core.'
     };
 
-    this.http.post('http://localhost:8000/api/admin/solicitudes/evaluar', payload).subscribe({
+    this.http.get<any[]>(`${this.apiUrl}/admin/solicitudes`).subscribe({
       next: (res: any) => {
         alert(`Solicitud #${payload.id} cambiada a estado: ${nuevoEstado} con éxito.`);
         this.cerrarModalEvaluacion();

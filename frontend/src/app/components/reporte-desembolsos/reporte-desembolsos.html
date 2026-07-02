@@ -1,9 +1,29 @@
-<div class="report-wrapper">
-  <header class="report-nav-header">
-    <button routerLink="/core-bancario" class="btn-back">← Volver</button>
-    <h1>Reporte</h1>
-  </header>
-  <div class="chart-container">
-    <ngx-charts-bar-vertical [results]="data" [xAxis]="true" [yAxis]="true"></ngx-charts-bar-vertical>
+<button routerLink="/core-bancario" class="btn-back">← Volver</button>
+<div class="dashboard-card">
+  <h2>Volumen Mensual de Desembolsos</h2>
+  <div style="display: flex; gap: 10px; align-items: flex-end; height: 150px; padding: 20px;">
+    <!-- Barras representativas -->
+    <div style="flex: 1; background: #3182ce; height: 60%; border-radius: 4px;"></div>
+    <div style="flex: 1; background: #3182ce; height: 90%; border-radius: 4px;"></div>
+    <div style="flex: 1; background: #3182ce; height: 75%; border-radius: 4px;"></div>
+    <div style="flex: 1; background: #3182ce; height: 100%; border-radius: 4px;"></div>
+    <div style="flex: 1; background: #3182ce; height: 85%; border-radius: 4px;"></div>
   </div>
+  <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+    <tr style="color: #a0aec0; border-bottom: 1px solid #2d3748;">
+      <th style="padding: 10px;">ID Operación</th><th>Oficina</th><th>Monto</th><th>Fecha</th>
+    </tr>
+    <tr style="border-bottom: 1px solid #2d3748;">
+      <td style="padding: 10px;">OP-8829</td><td>OF. PRINCIPAL</td><td>S/ 38.2M</td><td>01/06/2026</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #2d3748;">
+      <td style="padding: 10px;">OP-8830</td><td>AG. LIMA 1</td><td>S/ 30.5M</td><td>02/06/2026</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #2d3748;">
+      <td style="padding: 10px;">OP-8831</td><td>AG. LIMA 2</td><td>S/ 26.1M</td><td>03/06/2026</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #2d3748;">
+      <td style="padding: 10px;">OP-8832</td><td>AG. SUR 1</td><td>S/ 21.0M</td><td>04/06/2026</td>
+    </tr>
+  </table>
 </div>
