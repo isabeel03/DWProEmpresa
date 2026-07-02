@@ -79,12 +79,26 @@
   </div>
 
   <main class="dashboard-main-content">
+    <!-- Bandeja de Otorgamientos -->
     <div *ngIf="vistaActual === 'solicitudes'" class="table-executive-card">
-       </div>
+      <div *ngFor="let s of solicitudes" class="row-data">
+        <span>#{{ s.id }}</span>
+        <span>{{ s.cliente_id }}</span>
+        <span>S/ {{ s.monto_solicitado }}</span>
+        <button (click)="abrirEvaluacion(s)">Evaluar</button>
+      </div>
+    </div>
+
+    <!-- Bandeja de Mora -->
     <div *ngIf="vistaActual === 'mora'" class="table-executive-card">
-       </div>
+      <div *ngFor="let m of bandejaMora" class="row-data">
+        <span>Crédito #{{ m.id }}</span>
+        <span>Días Mora: {{ m.dias_mora }}</span>
+        <button (click)="procesarAccionCobranza(m.id, 'Gestionar')">Gestionar</button>
+      </div>
+    </div>
   </main>
 </div>
 
 <div class="modal-overlay" *ngIf="modalEvaluacion">
-  </div>
+</div>

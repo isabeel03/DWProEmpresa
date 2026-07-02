@@ -63,10 +63,10 @@ export class DashboardAdminComponent implements OnInit {
     this.montoPromedioSolicitado = this.totalMontoSolicitado / this.solicitudes.length;
   }
 
-
   cargarSolicitudes(): void {
     this.http.get<any[]>(`${this.apiUrl}/admin/solicitudes`).subscribe({
       next: (data) => {
+        // Mapeo seguro de los datos recibidos
         this.solicitudes = data.map(sol => ({
           ...sol,
           cliente_id: sol.cliente_id || sol.cliente_codigo_desarrollo || 'cli000001',
@@ -90,23 +90,25 @@ export class DashboardAdminComponent implements OnInit {
     this.solicitudSeleccionada = null;
   }
 
+  // --- CORRECCIÓN CRÍTICA: Método POST correcto para evaluar ---
   procesarDecision(nuevoEstado: 'Aprobado' | 'Rechazado'): void {
     if (!this.solicitudSeleccionada) return;
+    
     const payload = {
       id: this.solicitudSeleccionada.id,
-      estado: nuevoEstado,
-      observacion: this.observacionEvaluador || 'Evaluación procesada desde el Core.'
+      estado: nuevoEstado
     };
 
-    this.http.get<any[]>(`${this.apiUrl}/admin/solicitudes`).subscribe({
+    // Cambiado de GET a POST para enviar los datos de evaluación correctamente
+    this.http.post(`${this.apiUrl}/admin/solicitudes/evaluar`, payload).subscribe({
       next: (res: any) => {
-        alert(`Solicitud #${payload.id} cambiada a estado: ${nuevoEstado} con éxito.`);
+        alert(`Solicitud #${payload.id} actualizada a: ${nuevoEstado}`);
         this.cerrarModalEvaluacion();
         this.cargarSolicitudes();
       },
       error: (err) => {
         console.error('Error al actualizar el estado:', err);
-        alert('Hubo un problema al guardar la decisión en Supabase.');
+        alert('Hubo un problema al guardar la decisión.');
       }
     });
   }
