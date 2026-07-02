@@ -27,7 +27,7 @@ export class DashboardAdminComponent implements OnInit {
   solicitudSeleccionada: any = null;
   observacionEvaluador: string = '';
 
-  private apiUrl = 'http://localhost:8000/api'; 
+  private apiUrl = 'https://dwproempresa.onrender.com/api'; 
 
   constructor(
     private http: HttpClient, 
@@ -63,8 +63,9 @@ export class DashboardAdminComponent implements OnInit {
     this.montoPromedioSolicitado = this.totalMontoSolicitado / this.solicitudes.length;
   }
 
+
   cargarSolicitudes(): void {
-    this.http.get<any[]>('http://localhost:8000/api/admin/solicitudes').subscribe({
+    this.http.get<any[]>('https://dwproempresa.onrender.com/api/admin/solicitudes').subscribe({
       next: (data) => {
         this.solicitudes = data.map(sol => ({
           ...sol,

@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
   cuentaDestino: string = '';
   montoTransferir: number | null = null;
 
-  private apiUrl = 'http://localhost:8000/api'; 
+  private apiUrl = 'https://dwproempresa.onrender.com/api'; 
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

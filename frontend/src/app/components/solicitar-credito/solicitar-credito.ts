@@ -23,7 +23,7 @@ export class SolicitarCreditoComponent implements OnInit {
     ingreso_mensual: 0
   };
 
-  private apiUrl = 'http://localhost:8000/api'; // Url base unificada con /api
+  private apiUrl = 'https://dwproempresa.onrender.com/api';; // Url base unificada con /api
 
   constructor(private http: HttpClient, private router: Router) {}
 
