@@ -1,0 +1,17 @@
+# Backend (Python)
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/.env
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/tmp/
+
+# System
+.DS_Store
+Thumbs.db
+.claude/

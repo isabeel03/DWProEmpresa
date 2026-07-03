@@ -2,7 +2,8 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http'; 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,7 +46,7 @@ export class DashboardComponent implements OnInit {
   cuentaDestino: string = '';
   montoTransferir: number | null = null;
 
-  private apiUrl = 'https://dwproempresa.onrender.com/api'; 
+  private apiUrl = environment.apiUrl;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

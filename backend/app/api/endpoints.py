@@ -1,17 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
-from supabase import create_client, Client
-import os
 from typing import Optional
 from collections import Counter
 
+from app.services.supabase_client import supabase
+
 router = APIRouter()
-
-# Inicialización de Supabase
-SUPABASE_URL = "https://zdvjkkwfsvsjlcgyrtxh.supabase.co"
-SUPABASE_KEY = "sb_publishable_8H7B84TImgmWHOON_Sp0gg_qQfKzKh2"
-
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # --- MODELOS DE VALIDACIÓN ---
 class ClienteLoginCredentials(BaseModel):
@@ -448,6 +442,3 @@ async def get_reporte_mora():
         return res.data if res.data else []
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-        from collections import Counter

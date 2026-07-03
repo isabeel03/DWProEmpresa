@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -27,7 +28,7 @@ export class DashboardAdminComponent implements OnInit {
   solicitudSeleccionada: any = null;
   observacionEvaluador: string = '';
 
-  private apiUrl = 'https://dwproempresa.onrender.com/api'; 
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient, 

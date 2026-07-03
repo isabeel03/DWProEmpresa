@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-solicitar-credito',
@@ -23,7 +24,7 @@ export class SolicitarCreditoComponent implements OnInit {
     ingreso_mensual: 0
   };
 
-  private apiUrl = 'https://dwproempresa.onrender.com/api';; // Url base unificada con /api
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) {}
 
