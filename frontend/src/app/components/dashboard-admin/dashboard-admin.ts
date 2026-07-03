@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common'; 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
@@ -31,9 +31,10 @@ export class DashboardAdminComponent implements OnInit {
   private apiUrl = environment.apiUrl;
 
   constructor(
-    private http: HttpClient, 
-    private router: Router, 
-    @Inject(PLATFORM_ID) private platformId: Object
+    private http: HttpClient,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -75,6 +76,7 @@ export class DashboardAdminComponent implements OnInit {
           monto_solicitado: sol.monto_solicitado || sol.monto || 0
         }));
         this.calcularMetricas();
+        this.cdr.markForCheck();
       },
       error: (err) => console.error('Error al cargar solicitudes:', err)
     });
@@ -116,7 +118,10 @@ export class DashboardAdminComponent implements OnInit {
 
   cargarBandejaMora() {
     this.http.get<any[]>(`${this.apiUrl}/admin/bandeja-mora`).subscribe({
-      next: (data) => this.bandejaMora = data,
+      next: (data) => {
+        this.bandejaMora = data;
+        this.cdr.markForCheck();
+      },
       error: (err) => console.error('Error al cargar cartera vencida:', err)
     });
   }
@@ -152,6 +157,25 @@ export class DashboardAdminComponent implements OnInit {
 
   contarPorSemaforo(color: string): number {
     return this.solicitudes ? this.solicitudes.filter(s => s.semaforo_riesgo === color).length : 0;
+  }
+
+  pillClass(semaforo: string): string {
+    if (semaforo === 'Verde') return 'pill-green';
+    if (semaforo === 'Amarillo') return 'pill-yellow';
+    if (semaforo === 'Rojo') return 'pill-red';
+    return '';
+  }
+
+  estadoTexto(estado: string): string {
+    if (estado === 'Aprobado' || estado === 'Desembolsado') return 'txt-green';
+    if (estado === 'Rechazado') return 'txt-red';
+    return 'txt-yellow';
+  }
+
+  bandaMoraClase(banda: string): string {
+    if (banda === 'Judicial') return 'band-judicial';
+    if (banda === 'Castigo') return 'band-castigo';
+    return '';
   }
 
   cerrarSesion() {

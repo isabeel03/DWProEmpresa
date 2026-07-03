@@ -1,5 +1,5 @@
 <div class="admin-dashboard-wrapper">
-  
+
   <header class="admin-top-nav">
     <div class="nav-branding">
       <span class="bank-logo-title">ProEmpresa</span>
@@ -61,14 +61,14 @@
 
   <div class="navigation-tabs-wrapper">
     <div class="tabs-buttons-group">
-      <button class="tab-action-link" 
-              (click)="vistaActual = 'solicitudes'" 
+      <button class="tab-action-link"
+              (click)="vistaActual = 'solicitudes'"
               [class.active-tab]="vistaActual === 'solicitudes'">
         📥 Bandeja de Otorgamientos
       </button>
-      <button *ngIf="empleadoRol === 'administrador' || empleadoRol === 'comite' || empleadoRol === 'jefe_regional'" 
-              class="tab-action-link" 
-              (click)="vistaActual = 'mora'" 
+      <button *ngIf="empleadoRol === 'administrador' || empleadoRol === 'comite' || empleadoRol === 'jefe_regional'"
+              class="tab-action-link"
+              (click)="vistaActual = 'mora'"
               [class.active-tab]="vistaActual === 'mora'">
         ⚠️ Cartera con Problemas (Mora)
       </button>
@@ -81,40 +81,120 @@
   <main class="dashboard-main-content">
     <!-- Bandeja de Otorgamientos -->
     <div *ngIf="vistaActual === 'solicitudes'" class="table-executive-card">
-      <div *ngFor="let s of solicitudes" class="row-data">
-        <span>#{{ s.id }}</span>
-        <span>{{ s.cliente_id }}</span>
-        <span>S/ {{ s.monto_solicitado }}</span>
-        <button (click)="abrirEvaluacion(s)">Evaluar</button>
-      </div>
+      <table class="banking-core-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Monto Solicitado</th>
+            <th>Tipo</th>
+            <th>Scoring</th>
+            <th>Riesgo</th>
+            <th>Estado</th>
+            <th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of solicitudes">
+            <td class="cell-id">#{{ s.id }}</td>
+            <td class="cell-muted">{{ s.cliente_id }}</td>
+            <td class="cell-bold-amount">S/ {{ s.monto_solicitado | number:'1.0-0' }}</td>
+            <td>{{ s.tipo_credito || '—' }}</td>
+            <td><span class="scoring-pill">{{ s.scoring_puntos ?? '—' }}</span></td>
+            <td><span [class]="'semaphore-pill-clean ' + pillClass(s.semaforo_riesgo)">{{ s.semaforo_riesgo || '—' }}</span></td>
+            <td><span [class]="'state-text-bold ' + estadoTexto(s.estado)">{{ s.estado }}</span></td>
+            <td class="text-center">
+              <button *ngIf="s.estado === 'Pendiente'" class="btn-evaluar-action" (click)="abrirEvaluacion(s)">Evaluar</button>
+              <span *ngIf="s.estado !== 'Pendiente'" class="lbl-attended">Atendida</span>
+            </td>
+          </tr>
+          <tr *ngIf="solicitudes.length === 0">
+            <td colspan="8" class="text-center lbl-process-ended">No hay solicitudes registradas todavía.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Bandeja de Mora -->
     <div *ngIf="vistaActual === 'mora'" class="table-executive-card">
-      <div *ngFor="let m of bandejaMora" class="row-data">
-        <span>Crédito #{{ m.id }}</span>
-        <span>Días Mora: {{ m.dias_mora }}</span>
-        <button (click)="procesarAccionCobranza(m.id, 'Gestionar')">Gestionar</button>
-      </div>
+      <table class="banking-core-table">
+        <thead>
+          <tr>
+            <th>Crédito</th>
+            <th>Cliente</th>
+            <th>Monto Desembolsado</th>
+            <th>Días de Mora</th>
+            <th>Banda</th>
+            <th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of bandejaMora">
+            <td class="cell-id">#{{ m.solicitud_id }}</td>
+            <td class="cell-muted">{{ m.cliente_id || m.cliente_codigo_desarrollo }}</td>
+            <td class="cell-bold-amount">S/ {{ m.monto_desembolsado | number:'1.0-0' }}</td>
+            <td [class.cell-alert-days]="m.dias_mora > 0">{{ m.dias_mora }}</td>
+            <td><span [class]="'mora-band-badge ' + bandaMoraClase(m.banda_mora)">{{ m.banda_mora || 'Sin banda' }}</span></td>
+            <td class="text-center">
+              <div class="btn-group-row justify-center">
+                <button class="btn-core-action btn-core-warning" (click)="procesarAccionCobranza(m.id, 'Derivar Judicial')">Judicial</button>
+                <button class="btn-core-action btn-core-danger" (click)="procesarAccionCobranza(m.id, 'Castigar')">Castigar</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="bandejaMora.length === 0">
+            <td colspan="6" class="text-center lbl-process-ended">No hay créditos en mora. ✅</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </main>
 </div>
 
-<div class="modal-overlay" *ngIf="modalEvaluacion && solicitudSeleccionada">
-  <div class="modal-content">
-    <h3>Evaluación de Solicitud #{{ solicitudSeleccionada.id }}</h3>
-    <div class="modal-body">
-      <p><strong>Cliente:</strong> {{ solicitudSeleccionada.cliente_id }}</p>
-      <p><strong>Monto Solicitado:</strong> S/ {{ solicitudSeleccionada.monto_solicitado }}</p>
-      <p><strong>Estado Actual:</strong> {{ solicitudSeleccionada.estado }}</p>
-      
-      <textarea [(ngModel)]="observacionEvaluador" placeholder="Escribe aquí tu observación..." style="width: 100%; margin: 10px 0;"></textarea>
+<!-- Modal de Evaluación -->
+<div class="modal-overlay" *ngIf="modalEvaluacion">
+  <div class="evaluation-modal" *ngIf="solicitudSeleccionada">
+    <h3>Evaluar Solicitud #{{ solicitudSeleccionada.id }}</h3>
+    <p class="modal-subtitle">Cliente: {{ solicitudSeleccionada.cliente_id }}</p>
+
+    <div class="info-summary-grid">
+      <div class="info-box-mini">
+        <span class="lbl">Monto Solicitado</span>
+        <span class="val text-blue">S/ {{ solicitudSeleccionada.monto_solicitado | number:'1.0-0' }}</span>
+      </div>
+      <div class="info-box-mini">
+        <span class="lbl">Cuota Estimada</span>
+        <span class="val">S/ {{ solicitudSeleccionada.cuota_estimada | number:'1.0-0' }}</span>
+      </div>
+      <div class="info-box-mini">
+        <span class="lbl">RDS</span>
+        <span class="val">{{ solicitudSeleccionada.rds_ratio || 0 }}%</span>
+      </div>
+      <div class="info-box-mini">
+        <span class="lbl">Scoring</span>
+        <span class="val">{{ solicitudSeleccionada.scoring_puntos ?? '—' }}</span>
+      </div>
     </div>
-    
-    <div class="modal-actions">
-      <button (click)="procesarDecision('Aprobado')" class="btn-approve">✅ Aprobar</button>
-      <button (click)="procesarDecision('Rechazado')" class="btn-reject">❌ Rechazar</button>
-      <button (click)="cerrarModalEvaluacion()">Cerrar</button>
+
+    <div class="system-alert-badge"
+         [class.verde]="solicitudSeleccionada.semaforo_riesgo === 'Verde'"
+         [class.amarillo]="solicitudSeleccionada.semaforo_riesgo === 'Amarillo'"
+         [class.rojo]="solicitudSeleccionada.semaforo_riesgo === 'Rojo'">
+      Semáforo de riesgo: <strong>{{ solicitudSeleccionada.semaforo_riesgo }}</strong>
+    </div>
+
+    <textarea class="textarea-observacion" [(ngModel)]="observacionEvaluador"
+              placeholder="Observaciones del evaluador (opcional)..."></textarea>
+
+    <div class="action-buttons-row">
+      <button class="btn-action-dismiss" (click)="cerrarModalEvaluacion()">Cancelar</button>
+      <div class="decision-group">
+        <button class="btn-action-reject" (click)="procesarDecision('Rechazado')">Rechazar</button>
+        <button class="btn-action-approve"
+                [class.disabled-btn]="solicitudSeleccionada.semaforo_riesgo === 'Rojo'"
+                [disabled]="solicitudSeleccionada.semaforo_riesgo === 'Rojo'"
+                (click)="procesarDecision('Aprobado')">Aprobar</button>
+      </div>
     </div>
   </div>
 </div>

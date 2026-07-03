@@ -5,3 +5,7 @@
 
 .card { transition: transform 0.3s ease; }
 .card:hover { transform: scale(1.02); }
+
+.badge-mora { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+.banda-alto { background: #742a2a; color: #feb2b2; }
+.banda-medio { background: #744210; color: #fbd38d; }

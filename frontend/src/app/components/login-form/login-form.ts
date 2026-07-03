@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ export class LoginFormComponent {
   successMessage: string | null = null;
   loading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   cambiarModo(modoAdmin: boolean) {
     this.esAdmin = modoAdmin;
@@ -48,6 +48,7 @@ export class LoginFormComponent {
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.detail || 'Error de autenticación en el Core Bancario.';
+          this.cdr.markForCheck();
         }
       });
 
@@ -70,6 +71,7 @@ export class LoginFormComponent {
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.detail || 'Credenciales de Homebanking incorrectas.';
+          this.cdr.markForCheck();
         }
       });
     }

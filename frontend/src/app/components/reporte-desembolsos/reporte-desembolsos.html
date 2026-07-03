@@ -1,29 +1,38 @@
-<button routerLink="/core-bancario" class="btn-back">← Volver</button>
-<div class="dashboard-card">
-  <h2>Volumen Mensual de Desembolsos</h2>
-  <div style="display: flex; gap: 10px; align-items: flex-end; height: 150px; padding: 20px;">
-    <!-- Barras representativas -->
-    <div style="flex: 1; background: #3182ce; height: 60%; border-radius: 4px;"></div>
-    <div style="flex: 1; background: #3182ce; height: 90%; border-radius: 4px;"></div>
-    <div style="flex: 1; background: #3182ce; height: 75%; border-radius: 4px;"></div>
-    <div style="flex: 1; background: #3182ce; height: 100%; border-radius: 4px;"></div>
-    <div style="flex: 1; background: #3182ce; height: 85%; border-radius: 4px;"></div>
+<div class="dashboard-container">
+  <button routerLink="/core-bancario" class="btn-back">← Volver</button>
+  <div class="dashboard-card">
+    <h2>Créditos Desembolsados</h2>
+
+    <div *ngIf="cargando">Cargando datos de Supabase...</div>
+
+    <ng-container *ngIf="!cargando">
+      <div style="display: flex; gap: 10px; align-items: flex-end; height: 150px; padding: 20px;">
+        <div *ngFor="let c of creditos.slice(0, 8)"
+             style="flex: 1; background: #3182ce; border-radius: 4px;"
+             [style.height.%]="alturaBarra(c.monto_desembolsado)"
+             [title]="'S/ ' + c.monto_desembolsado">
+        </div>
+      </div>
+
+      <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+        <tr style="color: #a0aec0; border-bottom: 1px solid #2d3748;">
+          <th style="padding: 10px;">Operación</th>
+          <th>Cliente</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+        </tr>
+        <tr *ngFor="let c of creditos" style="border-bottom: 1px solid #2d3748;">
+          <td style="padding: 10px;">OP-{{ c.id }}</td>
+          <td>{{ c.cliente_id || c.cliente_codigo_desarrollo }}</td>
+          <td>S/ {{ c.monto_desembolsado | number:'1.0-0' }}</td>
+          <td>{{ c.fecha_desembolso | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr *ngIf="creditos.length === 0">
+          <td colspan="4" style="padding: 20px; text-align: center; color: #a0aec0;">
+            Aún no hay créditos desembolsados.
+          </td>
+        </tr>
+      </table>
+    </ng-container>
   </div>
-  <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
-    <tr style="color: #a0aec0; border-bottom: 1px solid #2d3748;">
-      <th style="padding: 10px;">ID Operación</th><th>Oficina</th><th>Monto</th><th>Fecha</th>
-    </tr>
-    <tr style="border-bottom: 1px solid #2d3748;">
-      <td style="padding: 10px;">OP-8829</td><td>OF. PRINCIPAL</td><td>S/ 38.2M</td><td>01/06/2026</td>
-    </tr>
-    <tr style="border-bottom: 1px solid #2d3748;">
-      <td style="padding: 10px;">OP-8830</td><td>AG. LIMA 1</td><td>S/ 30.5M</td><td>02/06/2026</td>
-    </tr>
-    <tr style="border-bottom: 1px solid #2d3748;">
-      <td style="padding: 10px;">OP-8831</td><td>AG. LIMA 2</td><td>S/ 26.1M</td><td>03/06/2026</td>
-    </tr>
-    <tr style="border-bottom: 1px solid #2d3748;">
-      <td style="padding: 10px;">OP-8832</td><td>AG. SUR 1</td><td>S/ 21.0M</td><td>04/06/2026</td>
-    </tr>
-  </table>
 </div>

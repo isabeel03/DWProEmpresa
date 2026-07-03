@@ -4,3 +4,4 @@
 .chart-container { background: #1e293b; border-radius: 8px; padding: 20px; height: 450px; }
 .card { transition: transform 0.3s ease; }
 .card:hover { transform: scale(1.02); }
+.bar-fill { animation: none; height: 10px; border-radius: 5px; transition: width 0.6s ease-out; }
